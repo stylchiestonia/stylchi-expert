@@ -149,7 +149,7 @@
 .navbar-nav li{
   padding: 0 10px;
   a{
-    color: $white;
+    color: rgba(34, 42, 66, 0.5);
   }
   i{
     vertical-align: middle;
@@ -259,7 +259,7 @@
 
       .dropdown-menu .dropdown-item:focus,
       .dropdown-menu .dropdown-item:hover{
-          color: $white;
+          color: #EDA42B;
       }
 
       &.bg-white .dropdown-menu .dropdown-item:focus,

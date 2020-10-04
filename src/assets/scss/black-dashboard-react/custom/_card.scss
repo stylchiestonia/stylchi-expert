@@ -45,11 +45,13 @@
       color: rgba($white,0.8);
 
       .card-title{
+        text-align: center;
           color: $white;
           font-weight: 100;
       }
 
       .card-category{
+        text-align: center;
         color: $dark-gray;
         margin-bottom: 5px;
         font-weight: 300;

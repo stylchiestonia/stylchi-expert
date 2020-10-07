@@ -71,3 +71,28 @@
   }
 
 }
+.card-settings {
+  height: 220px;
+  overflow: hidden;
+  border-radius: 1rem;
+ 
+  .card-header{
+    .card-title{
+      text-align: "center";
+      margin-bottom: 2px;
+    }
+  }
+    .card-body{
+      text-align: "center";
+      padding-left: 5px;
+      padding-right: 5px;
+      .tab-space{
+        padding: 0;
+      }
+      .img{
+        height: 50px;
+      
+      }
+    }
+
+}

@@ -7,7 +7,6 @@
     margin:4px 1px;
     border-radius: $border-radius-lg;
     cursor: pointer;
-
     @include btn-styles($default, $default-states);
 
     &:hover,
@@ -215,7 +214,8 @@
 .btn-round{
     border-width: $border-thin;
     border-radius: $btn-round-radius;
-
+    background: #1270BA;
+    background-color:#1270BA;
     &.btn-simple{
         padding: $padding-btn-vertical - 1  $padding-round-horizontal - 1;
     }

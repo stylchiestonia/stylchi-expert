@@ -36,7 +36,35 @@
   }
 }
 
+.settings_table {
+  width: 100%;
+  margin-bottom: $spacer;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
 
+  // th,
+  // td {
+  //   padding: $table-cell-padding;
+  //   vertical-align: top;
+  //   border-top: $table-border-width solid $table-border-color;
+  // }
+
+  thead th {
+    color: #64697A;
+    background-color: #fff;
+    // height: 80px;
+    // vertical-align: bottom;
+    // border-bottom: (2 * $table-border-width) solid $table-border-color;
+
+  }
+
+  // tbody + tbody {
+  //   border-top: (2 * $table-border-width) solid $table-border-color;
+  // }
+
+  // .table {
+  //   background-color: $body-bg;
+  // }
+}
 //
 // Condensed table w/ half padding
 //

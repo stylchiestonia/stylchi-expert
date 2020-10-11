@@ -130,7 +130,7 @@
     }
 }
 .btn-simple{
-    border: $border;
+    border: none;
     border-color: $default;
     box-shadow: none;
     padding: $padding-btn-vertical - 1 $padding-round-horizontal - 1;
@@ -152,6 +152,18 @@
             background: $transparent-bg;
         }
     }
+}
+.btn-sm {
+  font-size: $input-btn-font-size-sm;
+
+  &.btn-icon-only {
+    width: 35px;
+    height: 35px;
+  }
+
+  .btn-inner--icon {
+    font-size: 0.5rem;;
+  }
 }
 
 .btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active{

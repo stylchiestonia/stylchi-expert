@@ -282,7 +282,10 @@
   }
 
   .footer .copyright{
-    color: $black-states;
+    font-size: 1px;
+    line-height: 1.8;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
   }
 
   .progress-container, .progress-container.progress.sm{
@@ -320,8 +323,8 @@
    }
 
    .nav-pills .nav-item .nav-link:not(.active){
-     background: darken($light-bg,10%);
-     color: $black-states;
+     background-color: #6c757d42;
+     color: #fff;
      &:hover{
        background: darken($white,20%);
 

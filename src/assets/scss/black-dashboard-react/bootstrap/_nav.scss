@@ -72,18 +72,62 @@
 // Pills
 //
 
+// .nav-pills {
+//   .nav-item:not(:last-child) {
+//     padding-right: 2rem;
+  
+// }
+//   .nav-link {
+//     height: 50px;
+//     width: 150px;
+//     padding: $nav-pills-padding-y $nav-pills-padding-x;
+//     font-weight: 600;
+//     font-size: $font-size-lg;
+//     box-shadow: $nav-pills-box-shadow;
+//     transition: $transition-base;
+//     @include border-radius($nav-pills-border-radius);
+//   }
+
+//   .nav-link.active,
+//   .show > .nav-link {
+//     color: #fff;
+//     background-color: #1270BA;
+
+//   }
+// }
 .nav-pills {
+  .nav-item:not(:last-child) {
+      padding-right: $nav-pills-space-x;
+  }
+
   .nav-link {
-    @include border-radius($nav-pills-border-radius);
+    width: 150px;
+    padding: $nav-pills-padding-y $nav-pills-padding-x;
+      color: $nav-pills-link-color;
+      font-weight: 500;
+      font-size: $font-size-lg;
+      box-shadow: $nav-pills-box-shadow;
+      background-color: $nav-pills-bg;
+      transition: $transition-base;
+      @include border-radius($nav-pills-border-radius);
+
+      &:hover {
+        color: $nav-pills-link-hover-color;
+      }
   }
 
   .nav-link.active,
   .show > .nav-link {
-    color: rgb(237,164,43);
-    background-color: rgb(237,164,43);
+      color: $nav-pills-link-active-color;
+      background-color: #1270BA;
+  }
+
+  @include media-breakpoint-down(xs) {
+      .nav-item {
+          margin-bottom: $spacer;
+      }
   }
 }
-
 
 //
 // Justified variants

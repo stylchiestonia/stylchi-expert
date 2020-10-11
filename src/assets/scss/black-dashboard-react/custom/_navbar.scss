@@ -37,6 +37,8 @@
 
   &.navbar-transparent{
     background: transparent !important;
+    border: none;
+    box-shadow: none;
   }
 
   &.bg-white{
@@ -397,7 +399,7 @@
   .navbar {
     .caret {
       position: absolute;
-      left: 80%;
+      left: 85%;
       top: 55%;
       margin-left: 0;
     }

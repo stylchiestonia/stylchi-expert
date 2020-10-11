@@ -8,6 +8,19 @@ h1, h2, h3, h4, h5, h6,
   line-height: $headings-line-height;
 
 }
+.title {
+    font-family: Poppins;
+    font-size: 15px;
+    line-height: 32px;
+    color: #22223B;
+    margin-bottom: 11.85px;
+  }
+  .about {
+    font-family: Poppins;
+    font-size: 18px;
+    line-height: 27px;
+    color: #4A4E69;
+  }
 p{
   font-weight: $font-weight-light;
 }

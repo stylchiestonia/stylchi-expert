@@ -1,0 +1,23 @@
+.icons-block .icon {
+    width: 54px;
+    height: 54px;
+    background-color: #22BF69;
+    box-shadow: $nav-pills-box-shadow;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .icons-block .icon:first-child {
+    margin-right: 20px;
+  }
+  .icons-block .icon span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+  }
+  .icons-block .icon span i {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }

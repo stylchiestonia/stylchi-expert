@@ -1,0 +1,217 @@
+/* steps */
+.steps-block {
+    padding-bottom: 69px;
+  }
+  .first-step, .second-step {
+    display: flex;
+    align-items: center;
+  }
+  .step .img {
+    margin-bottom: 47.86px;
+    width: 100%;
+    height: 296px;
+  }
+  .step .title {
+    font-family: Poppins;
+    font-size: 20px;
+    line-height: 32px;
+    color: #22223B;
+    margin-bottom: 11.85px;
+  }
+  .step .about {
+    font-family: Poppins;
+    font-size: 18px;
+    line-height: 27px;
+    color: #4A4E69;
+  }
+  .arrow-bottom {
+    display: none;
+  }
+  
+  @media (max-width: 1199px) {
+    .second-step .arrow-btn {
+      display: none;
+    }
+    .centered-block {
+      margin: 0 auto;
+    }
+    .third-step .title {
+      display: none;
+    }
+  }
+  @media (max-width: 992px) {
+    .right-block-group-btns {
+      justify-content: flex-start;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    .first-step .arrow-btn {
+      transform: translateX(24px);
+    }
+    .arrow-bottom {
+      display: block;
+      transform: rotate(90deg);
+      margin: 25px;
+    }
+  }
+  @media (min-width: 660px) and (max-width: 992px) {
+    .top-banner-text {
+      margin-bottom: 15px;
+    }
+  }
+  @media (max-width: 767px) {
+    h1 {
+      font-size: 40px !important;
+      line-height: 60px !important;
+    }
+    .first-step, .second-step {
+      flex-direction: column;
+    }
+    .step {
+      margin-bottom: 30px;
+    }
+    .arrow-btn {
+      margin-top: 25px;
+      width: 100px;
+      transform: rotate(90deg);
+    }
+    .steps-block {
+      padding-bottom: 0;
+    }
+    .second-step .arrow-btn {
+      display: block;
+    }
+  }
+  @media (max-width: 660px) {
+    h1 {
+      font-size: 35px !important;
+      line-height: 50px !important;
+      text-align: center;
+    }
+    .top-banner-text {
+      text-align: center;
+    }
+    .right-block-group-btns {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+    .group {
+      margin-bottom: 15px;
+    }
+    .groups, .icons-block {
+      margin: auto;
+    }
+    .group:last-child .block {
+      margin-right: 0;
+    }
+  }
+  @media (max-width: 500px) {
+    .group .block {
+      width: 155px;
+      margin-right: 15px;
+    }
+  }
+  @media (max-width: 425px) {
+    .wrapper {
+      max-width: calc(100% - 50px);
+    }
+    h1 {
+      font-size: 30px !important;
+      line-height: 40px !important;
+    }
+    .top-banner-text {
+      margin-top: 10px;
+    }
+    .right-block-group-btns {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+    .group .block {
+      width: 150px;
+      padding: 12px;
+      margin-right: 18px;
+    }
+    .step .img {
+      height: fit-content;
+      margin-bottom: 30px;
+    }
+  }
+  @media (max-width: 360px) {
+    .group .block {
+      width: 130px;
+      padding: 12px;
+      margin-right: 8px;
+    }
+  }
+  .padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+.book-now{
+  height: 706px;
+        background-image: url("../../../img/theme/salon-bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        padding: 0px 20px;
+        border-radius: 38px;
+        margin: 5px;
+
+        @media screen and (max-width: 576px) {
+            padding: 0px 0px;
+        }
+   
+      .profile {
+        height: 70px;
+        width: 70px;
+      }
+       
+}
+.book-now .title {
+  font-family: Poppins;
+  font-size: 35px;
+  line-height: 32px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 11.85px;
+}
+.book-now .about {
+  font-family: Poppins;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+.book-now .detail {
+ 
+  margin-top: 300px;
+}
+.book-now .book-card {
+  border-radius: 30px;
+  height: 150px;
+
+
+}
+.book-card-body {
+        background-repeat: no-repeat;
+        background-size: cover;
+        
+  }
+  .right-side{
+    overflow: auto;
+    height: 80%;
+  }
+
+  .left-side{
+    background: rgba(34, 34, 59, 0.76);
+    background-image: url("../../../img/theme/login-bg.png");
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -o-background-size: 100% auto;
+     background-size: 100% auto;
+    width: 100%;
+    height: 1000px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

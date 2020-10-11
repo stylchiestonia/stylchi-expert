@@ -1,0 +1,53 @@
+.section {
+    position: relative;
+    padding-top: $spacer * 4;
+    padding-bottom: $spacer * 4;
+}
+
+.section-xl {
+    padding-top: $spacer * 8;
+    padding-bottom: $spacer * 8;
+}
+
+.section-lg {
+    padding-top: $spacer * 6;
+    padding-bottom: $spacer * 6;
+}
+
+.section-sm {
+    padding-top: $spacer * 2;
+    padding-bottom: $spacer * 2;
+}
+
+// Hero sections
+.section-hero {
+    @include media-breakpoint-up(md) {
+        min-height: 700px;
+        background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+
+    }
+    .clear-filter{
+        &:after,
+        &:before{
+            display: none;
+        }
+    
+        &[filter-color="orange"]{
+            @include linear-gradient(rgba(#000,.20), rgba(224, 23, 3, 0.6));
+        }
+    }
+
+}
+
+// Circle sections
+.section-shaped {
+    position: relative;
+    overflow: hidden;
+
+    &.section-hero {
+      &:before {
+        top: 680px;
+      }
+    }}

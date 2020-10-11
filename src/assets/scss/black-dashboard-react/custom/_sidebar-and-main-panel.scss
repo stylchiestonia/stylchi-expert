@@ -440,10 +440,12 @@
   position: relative;
   float: right;
   width: $full-width;
-  min-height: 100vh;
+  min-height: 100%;
   border-top: 2px solid $primary;
   background: linear-gradient($background-black, $background-states-black);
-
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   @include transitions (0.50s, cubic-bezier(0.685, 0.0473, 0.346, 1));
 
   &[data="blue"]{
@@ -470,6 +472,9 @@
 
   .header {
     margin-bottom: 50px;
+  }
+  .background-tint {
+    filter: sepia(100%) saturate(200%) brightness(70%) hue-rotate(330deg);
   }
 }
 

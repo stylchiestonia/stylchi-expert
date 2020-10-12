@@ -21,8 +21,6 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import AdminLayout from "layouts/Admin/Admin.js";
-import HomeLayout from "layouts/Home/Home.js";
-import AuthLayout from "layouts/Auth/Auth.js";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -34,9 +32,7 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/home" render={props => <HomeLayout {...props} />} />
-      <Route path="/auth" render={props => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/home" />
+      <Redirect from="/" to="/admin" />
     </Switch>
   </Router>,
   document.getElementById("root")

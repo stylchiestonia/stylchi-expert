@@ -11334,8 +11334,8 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   display: inline-block; }
 
 .modal.show .modal-dialog {
-  -webkit-transform: translate(0, 30%);
-  transform: translate(0, 30%); }
+  -webkit-transform: translate(0, 10%);
+  transform: translate(0, 10%); }
 
 code {
   color: #f3a4b5; }

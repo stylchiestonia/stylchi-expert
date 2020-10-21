@@ -4,7 +4,10 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import routes from "routes.js";
 
 class AuthLayout extends React.Component {
-
+  componentDidMount() {
+    document.body.classList.add("white-content");
+  
+  }
   getRoutes = routes => {
 
     return routes.map((prop, key) => {
@@ -32,7 +35,7 @@ class AuthLayout extends React.Component {
           >
             <Switch>
               {this.getRoutes(routes)}
-              <Redirect from="*" to="/landing"/>
+              <Redirect from="*" to="/auth/login"/>
             </Switch>
           </div>
         </div>

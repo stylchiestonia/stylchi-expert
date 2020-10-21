@@ -1,5 +1,8 @@
 import React from "react";
-import SwiperCore, {Navigation, Pagination, Scrollbar, A11y, EffectCoverflow}  from 'swiper';
+import { connect } from "react-redux";
+import ReactDatetime from "react-datetime";
+import { getCurrentExpert, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import {
@@ -17,6 +20,7 @@ import {
   Container,
   Table
 } from "reactstrap";
+import NotificationAlert from "react-notification-alert";
 import bg from "assets/img/flower-back.png";
 import 'swiper/components/effect-coverflow/effect-coverflow.scss';
 import 'swiper/components/navigation/navigation.scss';
@@ -25,14 +29,104 @@ SwiperCore.use([EffectCoverflow]);
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 class Settings extends React.Component {
+  notify = place => {
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+            Profile successfuly updated.
+          </div>
+        </div>
+      ),
+      type: 'success',
+      icon: "tim-icons icon-bell-55",
+      autoDismiss: 7
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       modalBank: false,
       modalPersonalDetails: false,
       modalPhotoGallery: false,
-      modalAvailability: false
+      modalAvailability: false,
+      modalNotification: false,
+      about: '',
+      status: false,
+      rowKey: null,
+      isEdit: false,
+      image: null,
+      scheduale: {
+        availability: []
+      },
+      gallery: [],
+      userProfile: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        lang: '',
+        phoneNumber: '',
+        status: '',
+        role: '',
+        gender: '',
+        dateOfBirth: '',
+        venueName: '',
+        residential: {
+          street: '',
+          number: '',
+          city: '',
+          country: ''
+        },
+        venue: {
+          street: '',
+          number: '',
+          city: '',
+          country: ''
+        }
+      }
+    }
+  }
+  onEdit = (id) => {
+
+    this.setState({
+      status: true,
+      rowKey: id
+    })
+  }
+  onCancel = () => {
+    const user = {
+      expert_id: "5f89b74c785a191b10dab1ac",
+      role: 'expert'
     };
+    this.props.getExpertScheduale(user);
+    this.setState({
+      status: false,
+      rowKey: null
+    })
+  }
+  onSave = () => {
+    const user = {
+      scheduale: this.state.scheduale
+    };
+    this.props.updateExpertScheduale(user);
+    this.setState({
+      status: false,
+      rowKey: null
+    })
+  }
+  componentDidMount() {
+    const user = {
+      user_id: "5f89b74c785a191b10dab1ac",
+      role: 'expert'
+    };
+    this.props.getCurrentExpert(user);
+    this.props.getExpertScheduale(user);
+    this.props.getExpertGallery(user)
   }
   toggleModalBank = () => {
     this.setState({
@@ -54,6 +148,97 @@ class Settings extends React.Component {
       modalAvailability: !this.state.modalAvailability
     });
   };
+  handleProfileUpdate = () => {
+    const current = {
+      currentUser: this.state.userProfile
+    };
+    this.props.updateCurrentExpert(current);
+    this.togglePersonalDetails();
+    this.notify("br");
+  }
+  imageUpload = () => {
+    let formData = new FormData();
+    formData.append("photo", this.state.image);
+    formData.append("user_id", '5f89b74c785a191b10dab1ac')
+    this.props.uploadImage(formData);
+    // if (event.target.files && event.target.files[0]) {
+    //   this.props.uploadImage(imageFormObj);
+    //   // this.setState({ image: event.currentTarget.files[0] })
+    //   // let imageFormObj = new FormData();
+    //   // imageFormObj.append("imageName", "5f89b74c785a191b10dab1ac" + Date.now());
+    //   // imageFormObj.append("imageData", event.target.files[0]);
+    //   // imageFormObj.append('user_id', "5f89b74c785a191b10dab1ac");
+
+    //   // console.log('--imageFormObj--', imageFormObj);
+    //   // this.props.uploadImage(imageFormObj);
+    // }
+    console.log('----------', this.state.image)
+  }
+  onChangeImage = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({ image: event.currentTarget.files[0] })
+      // let imageFormObj = new FormData();
+      // imageFormObj.append("imageName", "5f89b74c785a191b10dab1ac" + Date.now());
+      // imageFormObj.append("imageData", event.target.files[0]);
+      // imageFormObj.append('user_id', "5f89b74c785a191b10dab1ac");
+
+      // console.log('--imageFormObj--', imageFormObj);
+      // this.props.uploadImage(imageFormObj);
+    }
+  }
+  handleFromChange = (event) => {
+
+    let items = [...this.state.scheduale.availability];
+    let item = items.find(x => x._id === this.state.rowKey);
+    item.from = event.target.value;
+    this.setState({
+      data: items.map(el => (el._id === item._id ? { ...el, item } : el))
+    }
+    );
+  }
+  handleToChange = (event) => {
+
+    let items = [...this.state.scheduale.availability];
+    let item = items.find(x => x._id === this.state.rowKey);
+    item.to = event.target.value;
+    this.setState({
+      data: items.map(el => (el._id === item._id ? { ...el, item } : el))
+    }
+    );
+  }
+  handleStatusChange = (event) => {
+
+    let items = [...this.state.scheduale.availability];
+    let item = items.find(x => x._id === this.state.rowKey);
+    item.status = event.target.value;
+    this.setState({
+      data: items.map(el => (el._id === item._id ? { ...el, item } : el))
+    }
+    );
+  }
+  onChange = e => {
+    let obj = this.state.userProfile;
+    obj[e.target.id] = e.target.value;
+    this.setState({ userProfile: obj })
+  };
+  onChangeResidential = e => {
+    let obj = this.state.userProfile;
+    obj.residential[e.target.id] = e.target.value;
+    this.setState({ userProfile: obj })
+  };
+  onChangeVenue = e => {
+    let obj = this.state.userProfile;
+    obj.venue[e.target.id] = e.target.value;
+    this.setState({ userProfile: obj })
+  };
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      userProfile: nextProps.user.payload,
+      scheduale: nextProps.user.scheduale,
+      gallery: nextProps.user.gallery
+    })
+  };
+
   render() {
     return (
       <>
@@ -63,7 +248,11 @@ class Settings extends React.Component {
             backgroundPosition: "right top",
             backgroundRepeat: "no-repeat",
           }}
-        ><Container>
+        >
+          <div className="react-notification-alert-container">
+            <NotificationAlert ref="notificationAlert" />
+          </div>
+          <Container>
             <Row>
               <Col lg="3" />
               <Col lg="3">
@@ -265,8 +454,10 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>First Name</label>
                       <Input
-                        defaultValue="Adam"
+                        id="firstName"
+                        value={this.state.userProfile.firstName || ''}
                         type="text"
+                        onChange={this.onChange}
                       />
                     </FormGroup>
                   </Col>
@@ -274,18 +465,22 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Second Name</label>
                       <Input
-                        defaultValue="Schwerbatsky"
+                        id="lastName"
+                        value={this.state.userProfile.lastName || ''}
+                        onChange={this.onChange}
                         type="text"
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
-                <Col className="pr-md-1" md="6">
+                  <Col className="pr-md-1" md="6">
                     <FormGroup>
                       <label>Phone</label>
                       <Input
-                        defaultValue="+3245789845"
+                        id="phoneNumber"
+                        value={this.state.userProfile.phoneNumber || ''}
+                        onChange={this.onChange}
                         type="text"
                       />
                     </FormGroup>
@@ -294,87 +489,57 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Email</label>
                       <Input
-                        defaultValue="adam@gmail.com"
-                        type="text"
+                        id="email"
+                        value={this.state.userProfile.email || ''}
+                        onChange={this.onChange}
+                        type="email"
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1">
-                  <label>Residential Address</label>
-
-                  </Col>
-                  </Row>
-                <Row>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>Street</label>
-                      <Input
-                        defaultValue="Magnumstr"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="2">
-                    <FormGroup>
-                      <label>No</label>
-                      <Input
-                        defaultValue="88"
-                        type="number"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="2">
+                  <Col className="pr-md-1" md="6">
                     <FormGroup>
                       <label>Gender</label>
                       <Input
-                        defaultValue="Female"
-                        type="text"
+                        data-trigger=""
+                        id="choices-single-default"
+                        name="choices-single-default"
+                        type="select"
+                      >
+                        <option placeholder="true">Male</option>
+                        <option defaultValue="2">Female</option>
+                        <option defaultValue="3">Others</option>
+                      </Input>
+                    </FormGroup>
+
+                  </Col>
+                  <Col className="pr-md-1">
+                    <FormGroup>
+                      <label>Date of Birth</label>
+                      <ReactDatetime
+                        inputProps={{
+                          placeholder: "Select Date"
+                        }}
+                        timeFormat={false}
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>City</label>
-                      <Input
-                        defaultValue="Tallin"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="2">
-                    <FormGroup>
-                      <label>PC</label>
-                      <Input
-                        defaultValue="Estonia"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>Date of Birth</label>
-                      <Input
-                        defaultValue="Female"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>          
-                <Row style={{ marginTop: "30px" }}>
                   <Col className="pr-md-1">
-                  <label>Venue Address</label>
+                    <label>Residential Address</label>
+
                   </Col>
-                  </Row>
+                </Row>
                 <Row>
-                  <Col className="pr-md-1" md="4">
+                  <Col className="pr-md-1" md="8">
                     <FormGroup>
                       <label>Street</label>
                       <Input
-                        defaultValue="Magnumstr"
+                        id="street"
+                        onChange={this.onChangeResidential}
+                        value={this.state.userProfile.residential.street || ''}
                         type="text"
                       />
                     </FormGroup>
@@ -383,8 +548,60 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>No</label>
                       <Input
-                        defaultValue="88"
-                        type="number"
+                        type="text"
+                        value={this.state.userProfile.residential.number || ''}
+                        onChange={this.onChangeResidential}
+                        id="number"
+                      />
+                    </FormGroup>
+                  </Col>
+
+                </Row>
+                <Row style={{ marginTop: "30px" }}>
+                  <Col className="pr-md-1" md="6">
+                    <FormGroup>
+                      <label>City</label>
+                      <Input
+                        value={this.state.userProfile.residential.city || ''}
+                        type="text"
+                        onChange={this.onChangeResidential}
+                        id="city"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="6">
+                    <FormGroup>
+                      <label>PC</label>
+                      <Input
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+
+                </Row>
+                <Row style={{ marginTop: "30px" }}>
+                  <Col className="pr-md-1">
+                    <label>Venue Address</label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="pr-md-1" md="4">
+                    <FormGroup>
+                      <label>Street</label>
+                      <Input
+                        id="street"
+                        onChange={this.onChangeVenue}
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="2">
+                    <FormGroup>
+                      <label>No</label>
+                      <Input
+                        id="number"
+                        onChange={this.onChangeVenue}
+                        type="text"
                       />
                     </FormGroup>
                   </Col>
@@ -392,66 +609,55 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Venue Name (optional)</label>
                       <Input
-                        defaultValue="Female"
                         type="text"
+                        id="venueName"
+                        onChange={this.onChange}
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="4">
+                  <Col className="pr-md-1" md="6">
                     <FormGroup>
                       <label>City</label>
                       <Input
-                        defaultValue="Tallin"
+                        id="city"
+                        onChange={this.onChangeVenue}
                         type="text"
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pr-md-1" md="2">
+                  <Col className="pr-md-1" md="6">
                     <FormGroup>
                       <label>PC</label>
                       <Input
-                        defaultValue="Estonia"
                         type="text"
                       />
                     </FormGroup>
                   </Col>
-                </Row>            
+                </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col className="pr-md-1" md="12">
                     <FormGroup>
                       <label>About myself</label>
                       <Input
+                        id="about"
+                        value={this.state.userProfile.about || ''}
+                        onChange={this.onChange}
                         placeholder="Write something about yourself which will be visible to public"
                         type="textarea"
                       />
                     </FormGroup>
                   </Col>
-                </Row>          
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Change Password</label>
-                      <Input
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pl-md-1" md="6">
-                    <FormGroup>
-                      <label>Confirm Password</label>
-                      <Input
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
                 </Row>
-              <Row style={{ marginTop: "30px" }}>
+                <Row style={{ marginTop: "30px" }}>
                   <Col>
                     <Button className="btn-block"
                       color="success"
                       type="button"
+                      onClick={() => {
+                        this.handleProfileUpdate();
+                      }}
                     >
                       Save
                   </Button>
@@ -479,65 +685,90 @@ class Settings extends React.Component {
             <ModalBody >
               <div className="content">
                 <Row className="justify-content-center">
-                          <img
-                          className="rounded-circle"
-                            alt="..."
-                            style={{
-                              height:'120px',
-                              width:'120px'
-                            }}
-                            src={require("assets/img/upload_button.png")}
-                          />
-           </Row>
-           <Row style={{ marginTop: "30px" }} className="justify-content-center">
-                 
-                      Upload Image(s)
+                  <input
+                    accept="image/*"
+                    className="filetype"
+                    name="image"
+                    onChange={(e) => this.onChangeImage(e)}
+                    id="contained-button-file"
+                    type="file"
+                  />
+                </Row>
+                <Row className="justify-content-center">
+
+                  <img
+                    type="file"
+                    className="rounded-circle"
+                    alt="..."
+                    style={{
+                      height: '100px',
+                      width: '100px'
+                    }}
+                    src={require("assets/img/upload_button.png")}
+                    onClick={(e) => this.imageUpload(e)}
+                  />
+
+                </Row>
+                <Row style={{ marginTop: "30px" }} className="justify-content-center">
+                  Upload Image(s)
            </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
-                  <Swiper
-         effect= 'coverflow'        
-         pagination={{ clickable: true }}
-         slidesPerView={3}
-         spaceBetween={10}
-         grabCursor='true'
-        coverflow= {{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier:1,
-          slidesShadows: true
-        }}
-         onSlideChange={() => console.log('slide change')}
-    >
-      <SwiperSlide>  <img
-                      alt="..."
-                      src={require("assets/img/slider1.jpg")}
-                    /></SwiperSlide>
-   <SwiperSlide>  <img
-                      alt="..."
-                      src={require("assets/img/slider1.jpg")}
-                    /></SwiperSlide>
-   <SwiperSlide>  <img
-                      alt="..."
-                      src={require("assets/img/slider1.jpg")}
-                    /></SwiperSlide>
-    <SwiperSlide>  <img
-                      alt="..."
-                      src={require("assets/img/slider1.jpg")}
-                    /></SwiperSlide>
-    </Swiper>
-                   
+                    <Swiper
+                      effect='coverflow'
+                      pagination={{ clickable: true }}
+                      slidesPerView={3}
+                      spaceBetween={10}
+                      grabCursor='true'
+                      coverflow={{
+                        rotate: 50,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                        slidesShadows: true
+                      }}
+                      onSlideChange={() => console.log('slide change')}
+                    >
+                      {(this.state.gallery) ? this.state.gallery.map(image => {
+                        return (
+                          <SwiperSlide key={image._id}> <img
+                            alt="..."
+                            src={image.imageUrl}
+                          /></SwiperSlide>)
+                      }) : (
+                          <div>
+                            Loading ...
+                          </div>
+                        )
+                      }
+                      {/* <SwiperSlide>  <img
+                        alt="..."
+                        src={require("assets/img/slider1.jpg")}
+                      /></SwiperSlide>
+                      <SwiperSlide>  <img
+                        alt="..."
+                        src="https://stylchi-images.s3.amazonaws.com/2687e6643c5855820fbecaf99ecd6785.png"
+                      /></SwiperSlide>
+                      <SwiperSlide>  <img
+                        alt="..."
+                        src={require("assets/img/slider1.jpg")}
+                      /></SwiperSlide>
+                      <SwiperSlide>  <img
+                        alt="..."
+                        src={require("assets/img/slider1.jpg")}
+                      /></SwiperSlide> */}
+                    </Swiper>
+
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
-                 <Button className="btn-block"
-                      color="success"
-                      type="button"
-                    >
-                      Save
+                  <Button className="btn-block"
+                    color="success"
+                    type="button"
+                  >
+                    Save
                   </Button>
-                  </Row>
+                </Row>
               </div>
             </ModalBody>
           </Modal>
@@ -557,94 +788,180 @@ class Settings extends React.Component {
               </button>
               <h4 className="title title-up">Availability</h4>
             </div>
-            
+
             <ModalBody >
               <div className="content">
-                <Table className="settings_table" responsive>
-                    <thead >
-                      <tr >
-                        <th className="text-center" >Day week</th>
-                        <th className="text-center">From - To</th>
-                        <th className="text-center">Status</th>
-                        <th className="text-center"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="text-center">Monday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#22BF69"}}></i>{" "}Available</td>
+                <Table className="settings_table" responsive
+                  editable="true">
+                  <thead >
+                    <tr >
+                      <th className="text-center" >Day week</th>
+                      <th >From</th>
+                      <th >To</th>
+                      <th >Status</th>
+                      <th className="text-center"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(this.state.scheduale && (this.state.scheduale.availability.map(availability => (
+                      <tr key={availability._id}>
+                        <td className="text-center">{availability.day}</td>
+                        <td >
+                          {(this.state.status === true && this.state.rowKey === availability._id) ? (
+                            <div
+                              style={{
+                                width: "60px",
+                              }}
+                              className="align-items-center justify-content-center">
+                              <Input
+                                className="text-center"
+                                style={{
+                                  width: "100px",
+                                }}
+                                data-trigger=""
+                                id="choices-single-default"
+                                name="choices-single-default"
+                                type="select"
+                                value={availability.from}
+                                onChange={this.handleFromChange}
+                              >
+                                <option placeholder="true">9:00 AM</option>
+                                <option placeholder="true">9:30 AM</option>
+                                <option placeholder="true">10:00 AM</option>
+                                <option placeholder="true">10:30 AM</option>
+                                <option placeholder="true">11:00 AM</option>
+                                <option placeholder="true">11:30 AM</option>
+                                <option placeholder="true">12:00 PM</option>
+                                <option placeholder="true">12:30 PM</option>
+                                <option placeholder="true">1:00 PM</option>
+                                <option placeholder="true">1:30 PM</option>
+                                <option placeholder="true">2:00 PM</option>
+                                <option placeholder="true">2:30 PM</option>
+                                <option placeholder="true">3:00 PM</option>
+                                <option placeholder="true">3:30 PM</option>
+                                <option placeholder="true">4:00 PM</option>
+                                <option placeholder="true">4:30 PM</option>
+                                <option placeholder="true">5:00 PM</option>
+                                <option placeholder="true">5:30 PM</option>
+                                <option placeholder="true">6:00 PM</option>
+                                <option placeholder="true">6:30 PM</option>
+                                <option placeholder="true">7:00 PM</option>
+                                <option placeholder="true">7:30 PM</option>
+                                <option placeholder="true">8:00 PM</option>
+                                <option placeholder="true">8:30 PM</option>
+                                <option placeholder="true">9:00 PM</option>
+                              </Input>
+                            </div>) : (
+                              <p>{availability.from}</p>
+                            )
+                          }
+                        </td>
                         <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
+                          {(this.state.status === true && this.state.rowKey === availability._id) ? (
+                            <div
+                              style={{
+                                width: "60px",
+                              }} >
+                              <Input
+                                style={{
+                                  width: "100px",
+                                }}
+                                className="text-center"
+                                data-trigger=""
+                                id="choices-single-default"
+                                name="choices-single-default"
+                                type="select"
+                                value={availability.to}
+                                onChange={this.handleToChange}
+                              >
+                                <option placeholder="true">9:00 AM</option>
+                                <option placeholder="true">9:30 AM</option>
+                                <option placeholder="true">10:00 AM</option>
+                                <option placeholder="true">10:30 AM</option>
+                                <option placeholder="true">11:00 AM</option>
+                                <option placeholder="true">11:30 AM</option>
+                                <option placeholder="true">12:00 PM</option>
+                                <option placeholder="true">12:30 PM</option>
+                                <option placeholder="true">1:00 PM</option>
+                                <option placeholder="true">1:30 PM</option>
+                                <option placeholder="true">2:00 PM</option>
+                                <option placeholder="true">2:30 PM</option>
+                                <option placeholder="true">3:00 PM</option>
+                                <option placeholder="true">3:30 PM</option>
+                                <option placeholder="true">4:00 PM</option>
+                                <option placeholder="true">4:30 PM</option>
+                                <option placeholder="true">5:00 PM</option>
+                                <option placeholder="true">5:30 PM</option>
+                                <option placeholder="true">6:00 PM</option>
+                                <option placeholder="true">6:30 PM</option>
+                                <option placeholder="true">7:00 PM</option>
+                                <option placeholder="true">7:30 PM</option>
+                                <option placeholder="true">8:00 PM</option>
+                                <option placeholder="true">8:30 PM</option>
+                                <option placeholder="true">9:00 PM</option>
+                              </Input></div>) : (
+                              <p>{availability.to}</p>
+                            )
+                          }
                         </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Tuesday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#22BF69"}}></i>{" "}Available</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Wednesday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#22BF69"}}></i>{" "}Available</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Thursday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#22BF69"}}></i>{" "}Available</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Friday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#22BF69"}}></i>{" "}Available</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Saturday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#F8551A"}}></i>{" "}Unavailable</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">Sunday</td>
-                        <td className="text-center">9:00 AM–8:30 PM</td>
-      <td className="text-center"><i class="fa fa-circle" aria-hidden="true" style={{ color:"#F8551A"}}></i>{" "}Unavailable</td>
-      <td>
-                        <Button className="btn-icon" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                        </td>
-                      </tr>
-                    
-                     
+                        <td >
+                          {(this.state.status === true && this.state.rowKey === availability._id) ? (
+                            <div
+                              style={{
+                                width: "60px",
+                              }}
+                              className="align-items-center justify-content-center">
+                              <Input
+                                className="text-center"
+                                style={{
+                                  width: "100px",
+                                }}
+                                data-trigger=""
+                                id="choices-single-default"
+                                name="choices-single-default"
+                                type="select"
+                                value={availability.status}
+                                onChange={this.handleStatusChange}
+                              >
+                                <option placeholder="true">available</option>
+                                <option placeholder="true">unavailable</option>
+                              </Input>
+                            </div>) : (
+                              <p>
+                                {(availability.status === 'available' && <i className="fa fa-circle" aria-hidden="true" style={{ color: "#22BF69" }}></i>)}
+                                {(availability.status === 'unavailable' && <i className="fa fa-circle" aria-hidden="true" style={{ color: "#F90719" }}></i>)}
+                                {" "}{availability.status}</p>
 
-                    </tbody>
-                  </Table>
+                            )
+                          }
+                        </td>
+                        <td>
+                          {(this.state.status === true && this.state.rowKey === availability._id) ? (
+                            <div>
+                              <Button className="btn-icon" color="success" size="sm"
+                                onClick={() => {
+                                  this.onSave()
+                                }}>
+                                <i className="fa fa-check"></i>
+                              </Button> {` `}
+                              <Button className="btn-icon" color="warning" size="sm"
+                                onClick={() => {
+                                  this.onCancel()
+                                }}>
+                                <i className="fa fa-times"></i>
+                              </Button>
+                            </div>
+                          ) : (<Button className="btn-icon" color="success" size="sm"
+                            onClick={() => {
+                              this.onEdit(availability._id);
+                            }}>
+                            <i className="fa fa-edit"></i>
+                          </Button>)}
+                        </td>
+                      </tr>
+                    ))))}
+                  </tbody>
+                </Table>
               </div>
             </ModalBody>
           </Modal>
@@ -654,4 +971,12 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+function mapStateToProp(state) {
+  return {
+    user: state.user
+  }
+}
+export default connect(
+  mapStateToProp,
+  { getCurrentExpert, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery }
+)(Settings);

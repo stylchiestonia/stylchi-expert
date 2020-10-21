@@ -1,40 +1,48 @@
-/*!
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createBrowserHistory } from 'history';
 
-=========================================================
-* Black Dashboard React v1.1.0
-=========================================================
+import store from 'store';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
+import { setCurrentUser, logoutUser } from './actions/authActions';
+import setAuthToken from './utils/setAuthToken';
+import PrivateRoute from 'private-route/PrivateRoute';
 
-* Coded by Creative Tim
+import AdminLayout from 'layouts/Admin/Admin.js';
+import AuthLayout from 'layouts/Auth/Auth.js';
 
-=========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
-import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
-import HomeLayout from "layouts/Home/Home.js";
-import AdminLayout from "layouts/Admin/Admin.js";
-
-import "assets/scss/black-dashboard-react.scss";
-import "assets/demo/demo.css";
-import "assets/css/nucleo-icons.css";
+import 'assets/scss/black-dashboard-react.scss';
+import 'assets/css/nucleo-icons.css';
+import 'react-datetime/css/react-datetime.css';
 
 const hist = createBrowserHistory();
+axios.defaults.baseURL = 'http://localhost:9000/.netlify/functions/app'
 
+if (localStorage.jwtToken) {
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  const decoded = jwt_decode(token);
+  store.dispatch(setCurrentUser(decoded));
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    window.location.href = './auth/login';
+  }
+}
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/landing" render={props => <HomeLayout {...props} />} />
-      <Redirect from="/" to="/admin" />
-    </Switch>
-  </Router>,
-  document.getElementById("root")
+  <Provider store={store}>
+    <Router history={hist}>
+      <Route path='/auth/login' component={AuthLayout} />
+      <Switch>
+      <PrivateRoute path='/' component={AdminLayout} />
+        <PrivateRoute path='/admin' component={AdminLayout} />
+      </Switch>
+    </Router>
+  </Provider>,
+  document.getElementById('root')
 );

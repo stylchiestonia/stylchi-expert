@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getBookings } from "actions/bookingActions";
 
 // reactstrap components
 import {
@@ -19,16 +21,23 @@ import {
 } from "reactstrap";
 
 class Navbars extends React.Component {
+  refreshBookings= (status) => {
+    const bookingData = {
+      expert_id: "5f89b74c785a191b10dab1ac",
+      status: status
+    };
+    this.props.getBookings(bookingData)
+  }
   render() {
     return (
       <>
         <section>
           {/* Navbar info */}
-          <Navbar className="navbar-light bg-info mt-4" style={{fontFamily: "font-family: 'poppins-bold', sans-serif !important;"}} expand="lg">
+          <Navbar className="navbar-light bg-info mt-4"  expand="lg">
             <Container fluid>
               <button className="navbar-toggler" id="navbar-info">
                 <span className="navbar-toggler-icon">
-                <i class="fa fa-bars" aria-hidden="true"></i>
+                <i className="fa fa-bars" aria-hidden="true"></i>
                 </span>
               </button>
               <UncontrolledCollapse navbar toggler="#navbar-info">
@@ -50,19 +59,27 @@ class Navbars extends React.Component {
                       <span className="nav-link-inner--text">Bookings</span>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem to={{ 
-                        pathname: '/admin/bookings', state: { bookingcategory: 'pending'} 
-                        }} tag={Link}>
+                      <DropdownItem to='/admin/bookings'
+                        onClick={() => {
+                          this.refreshBookings('pending')
+                        }}
+                        tag={Link}
+                        >
                         Pending
                       </DropdownItem>
-                      <DropdownItem to={{ 
-                        pathname: '/admin/bookings', state: { bookingcategory: 'upcoming'} 
-                        }} tag={Link}>
+                      <DropdownItem to='/admin/bookings'
+                        onClick={() => {
+                          this.refreshBookings('upcoming')
+                        }}
+                        tag={Link}>
                         Upcoming
                       </DropdownItem>
-                      <DropdownItem to={{ 
-                        pathname: '/admin/bookings', state: { bookingcategory: 'past'} 
-                        }} tag={Link}>
+                      <DropdownItem 
+                      to='/admin/bookings'
+                      onClick={() => {
+                        this.refreshBookings('past')
+                      }}
+                      tag={Link}>
                         Past
                       </DropdownItem>
                     </DropdownMenu>
@@ -110,5 +127,12 @@ class Navbars extends React.Component {
     );
   }
 }
-
-export default Navbars;
+function mapStateToProp(state) {
+  return {
+    bookings: state.bookings,
+  }
+}
+export default connect(
+  mapStateToProp,
+  { getBookings}
+)(Navbars);

@@ -8,16 +8,27 @@ import {
   FormGroup,
   Row,
   Col,
-  Container
+  Container,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu
+
 } from "reactstrap";
 
 class Services extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bigChartData: "data1",
       modalCategory: false,
+      dropdownOpen: false,
+      setDropdownOpen: false
     };
+  }
+  toggle = (prevState) => {
+    this.setState({
+      setDropdownOpen: !prevState
+  });
   }
   toggleModalSearch = () => {
     this.setState({
@@ -39,9 +50,7 @@ class Services extends React.Component {
               <Button color="warning" size="md" onClick={this.toggleModalSearch}>
               Add Services
             </Button>
-            <Button color="warning" size="md" onClick={this.toggleModalSearch}>
-              Add Category
-            </Button></div>
+            </div>
             </Col>
           </Row>
           <Container>
@@ -129,10 +138,24 @@ class Services extends React.Component {
                         </Col>
                         <Col className="pr-md-1" md="6">
                         <FormGroup>
-                          <label>Category Name</label>
-                          <Input
-                            type="text"
-                          />
+                        <UncontrolledDropdown>
+                    <DropdownToggle>
+                    <label>Category</label>
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem> 
+                        Pending
+                      </DropdownItem>
+                      <DropdownItem >
+                        Upcoming
+                      </DropdownItem>
+                      <DropdownItem 
+                    
+                     >
+                        Past
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                         </FormGroup>
                       </Col>
                 </Row>

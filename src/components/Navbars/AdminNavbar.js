@@ -169,7 +169,6 @@ class AdminNavbar extends React.Component {
                     <p className="d-lg-none">Log out</p>
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
-                    <DropdownItem divider tag="li" />
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">Log out</DropdownItem>
                     </NavLink>

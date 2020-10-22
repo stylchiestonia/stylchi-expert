@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ReactDatetime from "react-datetime";
+import moment from "moment";
 import { getCurrentExpert, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -63,6 +64,7 @@ class Settings extends React.Component {
       scheduale: {
         availability: []
       },
+      slidesPerView:'auto',
       gallery: [],
       userProfile: {
         firstName: '',
@@ -98,6 +100,7 @@ class Settings extends React.Component {
       rowKey: id
     })
   }
+  
   onCancel = () => {
     const user = {
       expert_id: "5f89b74c785a191b10dab1ac",
@@ -218,9 +221,17 @@ class Settings extends React.Component {
   }
   onChange = e => {
     let obj = this.state.userProfile;
+    console.log('----------------', e)
     obj[e.target.id] = e.target.value;
     this.setState({ userProfile: obj })
   };
+  onChangeDateOfBirth = (e) => {
+    let date = moment(e.toDate()).format('MM/DD/YYYY');
+    console.log('---------date----', date)
+    let obj = this.state.userProfile;
+    obj.dateOfBirth = date;
+    this.setState({ userProfile: obj })
+  }
   onChangeResidential = e => {
     let obj = this.state.userProfile;
     obj.residential[e.target.id] = e.target.value;
@@ -236,7 +247,7 @@ class Settings extends React.Component {
       userProfile: nextProps.user.payload,
       scheduale: nextProps.user.scheduale,
       gallery: nextProps.user.gallery
-    })
+        })
   };
 
   render() {
@@ -254,7 +265,8 @@ class Settings extends React.Component {
           </div>
           <Container>
             <Row>
-              <Col lg="3" />
+          
+              <Col lg="3"/>
               <Col lg="3">
                 <Card className="card-settings" style={{
                   textAlign: "center",
@@ -448,6 +460,7 @@ class Settings extends React.Component {
 
             </div>
             <ModalBody >
+              { (this.state.userProfile) ? (
               <div className="content">
                 <Row>
                   <Col className="pr-md-1" md="6">
@@ -490,6 +503,7 @@ class Settings extends React.Component {
                       <label>Email</label>
                       <Input
                         id="email"
+                        disabled
                         value={this.state.userProfile.email || ''}
                         onChange={this.onChange}
                         type="email"
@@ -503,9 +517,11 @@ class Settings extends React.Component {
                       <label>Gender</label>
                       <Input
                         data-trigger=""
-                        id="choices-single-default"
-                        name="choices-single-default"
+                        id="gender"
+                        name="gender"
                         type="select"
+                        value={this.state.userProfile.gender || 'Male'}
+                        onChange={this.onChange}
                       >
                         <option placeholder="true">Male</option>
                         <option defaultValue="2">Female</option>
@@ -522,6 +538,10 @@ class Settings extends React.Component {
                           placeholder: "Select Date"
                         }}
                         timeFormat={false}
+                        value={'' || this.state.userProfile.dateOfBirth}
+                        id="dateOfBirth"
+                        onChange={this.onChangeDateOfBirth}
+                       
                       />
                     </FormGroup>
                   </Col>
@@ -529,7 +549,6 @@ class Settings extends React.Component {
                 <Row style={{ marginTop: "30px" }}>
                   <Col className="pr-md-1">
                     <label>Residential Address</label>
-
                   </Col>
                 </Row>
                 <Row>
@@ -539,7 +558,7 @@ class Settings extends React.Component {
                       <Input
                         id="street"
                         onChange={this.onChangeResidential}
-                        value={this.state.userProfile.residential.street || ''}
+                        value={ '' || this.state.userProfile.residential.street}
                         type="text"
                       />
                     </FormGroup>
@@ -549,7 +568,7 @@ class Settings extends React.Component {
                       <label>No</label>
                       <Input
                         type="text"
-                        value={this.state.userProfile.residential.number || ''}
+                        value={'' || this.state.userProfile.residential.number}
                         onChange={this.onChangeResidential}
                         id="number"
                       />
@@ -562,7 +581,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>City</label>
                       <Input
-                        value={this.state.userProfile.residential.city || ''}
+                        value={ '' || this.state.userProfile.residential.city}
                         type="text"
                         onChange={this.onChangeResidential}
                         id="city"
@@ -571,9 +590,12 @@ class Settings extends React.Component {
                   </Col>
                   <Col className="pr-md-1" md="6">
                     <FormGroup>
-                      <label>PC</label>
+                      <label>Country</label>
                       <Input
+                        value={ '' || this.state.userProfile.residential.country}
                         type="text"
+                        onChange={this.onChangeResidential}
+                        id="country"
                       />
                     </FormGroup>
                   </Col>
@@ -590,6 +612,7 @@ class Settings extends React.Component {
                       <label>Street</label>
                       <Input
                         id="street"
+                        value={ '' || this.state.userProfile.venue.street}
                         onChange={this.onChangeVenue}
                         type="text"
                       />
@@ -599,6 +622,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>No</label>
                       <Input
+                        value={ '' || this.state.userProfile.venue.number}
                         id="number"
                         onChange={this.onChangeVenue}
                         type="text"
@@ -610,6 +634,7 @@ class Settings extends React.Component {
                       <label>Venue Name (optional)</label>
                       <Input
                         type="text"
+                        value={ '' || this.state.userProfile.venueName}
                         id="venueName"
                         onChange={this.onChange}
                       />
@@ -621,6 +646,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>City</label>
                       <Input
+                        value={ '' || this.state.userProfile.venue.city}
                         id="city"
                         onChange={this.onChangeVenue}
                         type="text"
@@ -629,9 +655,12 @@ class Settings extends React.Component {
                   </Col>
                   <Col className="pr-md-1" md="6">
                     <FormGroup>
-                      <label>PC</label>
+                      <label>Country</label>
                       <Input
-                        type="text"
+                         value={ '' || this.state.userProfile.venue.country}
+                         id="country"
+                         onChange={this.onChangeVenue}
+                         type="text"
                       />
                     </FormGroup>
                   </Col>
@@ -663,7 +692,9 @@ class Settings extends React.Component {
                   </Button>
                   </Col>
                 </Row>
-              </div>
+              </div> ) : (
+                <div></div>
+              )}
             </ModalBody>
           </Modal>
           <Modal
@@ -695,7 +726,8 @@ class Settings extends React.Component {
                   />
                 </Row>
                 <Row className="justify-content-center">
-
+                <Button color='neutral'             
+                >
                   <img
                     type="file"
                     className="rounded-circle"
@@ -707,18 +739,19 @@ class Settings extends React.Component {
                     src={require("assets/img/upload_button.png")}
                     onClick={(e) => this.imageUpload(e)}
                   />
-
+                  </Button>
+                  <input type="file" style={{display:'none'}} /> 
                 </Row>
                 <Row style={{ marginTop: "30px" }} className="justify-content-center">
-                  Upload Image(s)
+                  Upload Image
            </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
                     <Swiper
                       effect='coverflow'
+                      navigation
+                      slidesPerView='auto'
                       pagination={{ clickable: true }}
-                      slidesPerView={3}
-                      spaceBetween={10}
                       grabCursor='true'
                       coverflow={{
                         rotate: 50,
@@ -727,36 +760,20 @@ class Settings extends React.Component {
                         modifier: 1,
                         slidesShadows: true
                       }}
+                      observer='true'
                       onSlideChange={() => console.log('slide change')}
                     >
                       {(this.state.gallery) ? this.state.gallery.map(image => {
-                        return (
-                          <SwiperSlide key={image._id}> <img
+                         
+                         return <SwiperSlide key={image._id}><img
                             alt="..."
                             src={image.imageUrl}
-                          /></SwiperSlide>)
+                          />
+                          </SwiperSlide>
                       }) : (
-                          <div>
-                            Loading ...
-                          </div>
-                        )
-                      }
-                      {/* <SwiperSlide>  <img
-                        alt="..."
-                        src={require("assets/img/slider1.jpg")}
-                      /></SwiperSlide>
-                      <SwiperSlide>  <img
-                        alt="..."
-                        src="https://stylchi-images.s3.amazonaws.com/2687e6643c5855820fbecaf99ecd6785.png"
-                      /></SwiperSlide>
-                      <SwiperSlide>  <img
-                        alt="..."
-                        src={require("assets/img/slider1.jpg")}
-                      /></SwiperSlide>
-                      <SwiperSlide>  <img
-                        alt="..."
-                        src={require("assets/img/slider1.jpg")}
-                      /></SwiperSlide> */}
+                        <div></div>
+                      )}
+                     
                     </Swiper>
 
                   </Col>

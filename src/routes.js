@@ -3,7 +3,7 @@ import Bookings from "views/Bookings.js";
 import Services from "views/Services.js";
 import Settings from "views/Settings.js";
 import Login from "views/Login.js";
-import Notifications from "views/Notifications.js";
+
 var routes = [
   {
     path: "/dashboard",
@@ -31,13 +31,6 @@ var routes = [
     name: "Settings",
     icon: "tim-icons icon-atom",
     component: Settings,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "tim-icons icon-atom",
-    component: Notifications,
     layout: "/admin"
   },
   /*---------------------- Auth Routes ----------------------------*/

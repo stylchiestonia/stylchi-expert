@@ -93,13 +93,14 @@ $colors: map-merge((
   "gray-dark":  $gray-800
 ), $colors);
 
-$default-color-opacity:      rgba(182, 182, 182, .6) !default;
+$default-color-opacity:      rgba(182, 182, 182, 0) !default;
 $orange-color:               #f96332 !default;
 
 $default:       #1270BA !default;
 $primary:       #EDA42B !default;
 $secondary:     #f4f5f7 !default;
 $success:       #22B569 !default;
+$transparent:   #ffffff00 !default;
 $info:          #1d8cf8 !default;
 $blue:          #1270BA !default;
 $warning:       #F8551A !default;

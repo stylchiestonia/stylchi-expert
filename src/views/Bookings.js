@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getBookings, updateBooking } from "actions/bookingActions";
 // reactstrap components
-import { Card, CardBody, Row, Col, Table, ButtonGroup, Button } from "reactstrap";
+import { Card, CardBody, Row, Col, Table, ButtonGroup, Button, Modal, ModalBody } from "reactstrap";
 
 class Bookings extends React.Component {
   constructor(props) {
@@ -19,14 +19,20 @@ class Bookings extends React.Component {
     };
    
     this.props.getBookings(bookingData);
+   
   }
+  toggleModal = state => {
+    this.setState({
+      [state]: !this.state[state]
+    });
+  };
   acceptBooking = (booking) => {
     booking.status = 'upcoming';
     const bookingData = {
       expert_id: "5f89b74c785a191b10dab1ac",
       booking: booking
     }
-    this.props.updateBooking(bookingData)
+    this.props.updateBooking(bookingData);
   }
   endBooking = (booking) => {
     booking.status = 'past';
@@ -36,15 +42,17 @@ class Bookings extends React.Component {
     }
     this.props.updateBooking(bookingData)
   }
+  RejectBooking = (booking) => {
+    // booking.status = 'past';
+    // const bookingData = {
+    //   expert_id: "5f89b74c785a191b10dab1ac",
+    //   booking: booking
+    // }
+    // this.props.updateBooking(bookingData)
+  }
   
   render() {
     const loading = !this.props.bookings.loading;
-    console.log('--------------', this.props.view);
-
-    if(this.props.view){
-      console.log('--------------', this.props.view.view);
-
-    }
     return (
       <>
         <div className="content">
@@ -91,11 +99,11 @@ class Bookings extends React.Component {
                                   this.acceptBooking(booking);
                                 }} size="md">Accept
                                   </Button> {` `}
-                                <Button color="warning" size="md">Reject
+                                <Button color="warning" size="md" onClick={() => this.toggleModal("notificationModal")}>Reject 
                                   </Button>
                               </ButtonGroup>}
                             {((booking.status  === 'upcoming' && booking.status !== 'past')) &&
-                              <Button style={{ marginBottom: "10px" }} color="default" size="md">Complete
+                              <Button style={{ marginBottom: "10px" }} color="default" size="md" onClick={() => this.endBooking(booking)}>Complete
                                   </Button>
                             }
                           </td>
@@ -108,6 +116,29 @@ class Bookings extends React.Component {
               </Card>
             </Col>
           </Row>
+          <Modal
+              className="modal-dialog-centered modal-danger"
+              contentClassName="bg-gradient-danger"
+              isOpen={this.state.notificationModal}
+              toggle={() => this.toggleModal("notificationModal")}
+            >
+              <div className="modal-header">
+                <h6 className="modal-title" id="modal-title-notification">
+                  Your attention is required
+                </h6>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="modal"
+                  type="button"
+                  onClick={() => this.toggleModal("notificationModal")}
+                >
+                  <span aria-hidden={true}>×</span>
+                </button>
+              </div>
+              <ModalBody >
+              </ModalBody>
+            </Modal>
         </div>
       </>
     );

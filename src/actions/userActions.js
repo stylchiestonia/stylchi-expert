@@ -1,7 +1,6 @@
 import axios from "axios"
 import { GET_ERRORS, FETCH_USER_SUCCESS, FETCH_SCEHDUALE_SUCCESS, FETCH_Gallery_SUCCESS } from "./types";
 
-const token = localStorage.jwtToken;
 
 export const getCurrentExpert = user => dispatch => {
     axios

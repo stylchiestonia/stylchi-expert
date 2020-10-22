@@ -1,36 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getBookings, updateBooking } from "actions/bookingActions";
-// reactstrap components
 import { Card, CardBody, Row, Col, Table, ButtonGroup, Button, Modal, ModalBody } from "reactstrap";
 
 class Bookings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current_view: "pending"
+      current_view: "pending",
+      current_booking: {}
     };
   }
 
   componentDidMount() {
     const bookingData = {
-      expert_id: "5f89b74c785a191b10dab1ac",
       status: 'pending'
     };
-   
     this.props.getBookings(bookingData);
-   
   }
-  toggleModal = state => {
+  toggleModal = (state, booking) => {
     this.setState({
-      [state]: !this.state[state]
+      [state]: !this.state[state],
+      current_booking: booking
     });
   };
   acceptBooking = (booking) => {
     booking.status = 'upcoming';
     const bookingData = {
-      expert_id: "5f89b74c785a191b10dab1ac",
-      booking: booking
+      booking: booking,
+      status: 'pending'
     }
     this.props.updateBooking(bookingData);
   }
@@ -38,27 +36,38 @@ class Bookings extends React.Component {
     booking.status = 'past';
     const bookingData = {
       expert_id: "5f89b74c785a191b10dab1ac",
-      booking: booking
+      booking: booking,
+      status: 'upcoming'
     }
     this.props.updateBooking(bookingData)
   }
-  RejectBooking = (booking) => {
-    // booking.status = 'past';
-    // const bookingData = {
-    //   expert_id: "5f89b74c785a191b10dab1ac",
-    //   booking: booking
-    // }
-    // this.props.updateBooking(bookingData)
+  RejectBooking = () => {
+    let obj = this.state.current_booking;
+    obj.status = 'past';
+    const bookingData = {
+      booking:  obj,
+      status: 'pending'
+    }
+    this.props.updateBooking(bookingData)
   }
-  
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      current_view: nextProps.bookings.status,
+        })
+  };
   render() {
     const loading = !this.props.bookings.loading;
     return (
       <>
+      { (loading && this.props.bookings.payload.length > 0) ? (
         <div className="content">
-          {(this.state.current_view === 'pending') && <div><h1>Pending Bookings</h1></div>}
-          {(this.state.current_view  === 'upcoming') && <div><h1>Upcoming Bookings</h1></div>}
-          {(this.state.current_view === 'past') && <div><h1>Past Bookings</h1></div>}
+          {(this.state.current_view) ? ( 
+          <div><h1 style={{
+            textTransform:'capitalize'
+          }}>{this.state.current_view} Bookings</h1></div>
+              ) : (
+                <div><h1>Pending Bookings</h1></div>
+              )}
 
           <Row>
             <Col>
@@ -74,7 +83,7 @@ class Bookings extends React.Component {
                         <th className="text-center">Customer Address</th>
                         <th className="text-center">Instructions</th>
                         <th className="text-center">Payment</th>
-                        <th className="text-center">  {(this.state.fetch_data !== 'past') && <div>Action</div>}</th>
+                        <th className="text-center">  {(loading && this.state.current_view !== 'past') && <div>Action</div>}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -99,7 +108,7 @@ class Bookings extends React.Component {
                                   this.acceptBooking(booking);
                                 }} size="md">Accept
                                   </Button> {` `}
-                                <Button color="warning" size="md" onClick={() => this.toggleModal("notificationModal")}>Reject 
+                                <Button color="warning" size="md" onClick={() => this.toggleModal("notificationModal", booking)}>Reject 
                                   </Button>
                               </ButtonGroup>}
                             {((booking.status  === 'upcoming' && booking.status !== 'past')) &&
@@ -117,29 +126,51 @@ class Bookings extends React.Component {
             </Col>
           </Row>
           <Modal
-              className="modal-dialog-centered modal-danger"
-              contentClassName="bg-gradient-danger"
-              isOpen={this.state.notificationModal}
-              toggle={() => this.toggleModal("notificationModal")}
-            >
-              <div className="modal-header">
-                <h6 className="modal-title" id="modal-title-notification">
-                  Your attention is required
-                </h6>
-                <button
-                  aria-label="Close"
-                  className="close"
-                  data-dismiss="modal"
-                  type="button"
-                  onClick={() => this.toggleModal("notificationModal")}
-                >
-                  <span aria-hidden={true}>×</span>
-                </button>
-              </div>
-              <ModalBody >
-              </ModalBody>
-            </Modal>
-        </div>
+            modalClassName="modal-services"
+            isOpen={this.state.notificationModal}
+            toggle={() => this.toggleModal("notificationModal")}>
+            <div className="modal-header justify-content-center">
+              <button
+                aria-label="Close"
+                className="close"
+                data-dismiss="modal"
+                type="button"
+                onClick={() => this.toggleModal("notificationModal")}
+              >
+                <i className="tim-icons icon-simple-remove" />
+              </button>
+              <h4 className="title title-up">Your attention is required</h4>
+            </div>
+            <ModalBody >
+              <div className="content">
+            <div className="text-center">
+                  <h4 className="heading">Are you sure you want to reject this booking?</h4>
+                  <p>
+                   Note: This action is irreversible
+                  </p>
+                </div>
+                <Row className="justify-content-center">
+              
+                    <Button color="default" size="md"
+                     onClick={() => this.toggleModal("notificationModal")}>
+                      Cancel
+                    </Button>
+                 
+                    <Button color="warning" size="md"
+                    onClick={() => this.RejectBooking()}>
+                      Reject
+                    </Button>
+                
+                </Row>
+                </div>
+            </ModalBody>
+          </Modal>
+        </div> ): (
+          <div className="content">
+            <img alt='' src={require('assets/img/theme/no_data.png')}>
+            </img>        
+          </div>
+        )}
       </>
     );
   }

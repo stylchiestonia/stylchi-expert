@@ -1,13 +1,16 @@
 import axios from "axios"
 import { GET_ERRORS, FETCH_BOOKINGS_REQUEST, FETCH_BOOKINGS_SUCCESS} from "./types";
-
+axios.defaults.headers.common = {
+  'Authorization': 'JWT ' + localStorage.jwtToken
+};
 export const getBookings = bookingData => dispatch => {
     dispatch({
         type:FETCH_BOOKINGS_REQUEST
     })
     axios
-      .post("http://localhost:5000/api/expert/bookings", bookingData)
+      .post("expert/bookings", bookingData)
       .then(res => {
+          res.data.status = bookingData.status;
         dispatch({
             type: FETCH_BOOKINGS_SUCCESS,
             payload: res.data
@@ -25,8 +28,9 @@ export const updateBooking = bookingData => dispatch => {
         type:FETCH_BOOKINGS_REQUEST
     })
     axios
-      .post("http://localhost:5000/api/expert/bookings/update", bookingData)
+      .post("expert/bookings/update", bookingData)
       .then(res => {
+        res.data.status = bookingData.status;
         dispatch({
             type: FETCH_BOOKINGS_SUCCESS,
             payload: res.data

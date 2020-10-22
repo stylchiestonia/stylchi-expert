@@ -9,8 +9,10 @@ export default function(state = initialState, action) {
   switch (action.type) {
       case FETCH_BOOKINGS_SUCCESS:
         return {
+            ...state,
             loading: false,
-            payload: action.payload
+            payload: action.payload,
+            status: action.payload.status
         }
         case FETCH_BOOKINGS_REQUEST:
             return {

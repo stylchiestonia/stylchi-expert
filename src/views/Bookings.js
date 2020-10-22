@@ -43,12 +43,13 @@ class Bookings extends React.Component {
   }
   RejectBooking = () => {
     let obj = this.state.current_booking;
-    obj.status = 'past';
+    obj.status = 'reject';
     const bookingData = {
       booking:  obj,
       status: 'pending'
     }
-    this.props.updateBooking(bookingData)
+    this.props.updateBooking(bookingData);
+    this.toggleModal("notificationModal");
   }
   componentWillReceiveProps(nextProps) {
     this.setState({

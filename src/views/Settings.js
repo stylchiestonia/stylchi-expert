@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactDatetime from "react-datetime";
 import moment from "moment";
-import { getCurrentExpert, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
+import { getCurrentExpert,getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
@@ -51,6 +51,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: '',
       modalBank: false,
       modalPersonalDetails: false,
       modalPhotoGallery: false,
@@ -66,6 +67,12 @@ class Settings extends React.Component {
       },
       slidesPerView:'auto',
       gallery: [],
+      ibanNumber: '',
+      accountNumber: '',
+      bankName: '',
+      bankAddress: '',
+      swiftCode: '',
+      fullName: '',
       userProfile: {
         firstName: '',
         lastName: '',
@@ -103,7 +110,6 @@ class Settings extends React.Component {
   
   onCancel = () => {
     const user = {
-      expert_id: "5f89b74c785a191b10dab1ac",
       role: 'expert'
     };
     this.props.getExpertScheduale(user);
@@ -124,9 +130,13 @@ class Settings extends React.Component {
   }
   componentDidMount() {
     const user = {
-      user_id: "5f89b74c785a191b10dab1ac",
       role: 'expert'
     };
+    this.setState({
+      userId:  localStorage.getItem('userId') 
+    })
+   
+    this.props.getBankInfo();
     this.props.getCurrentExpert(user);
     this.props.getExpertScheduale(user);
     this.props.getExpertGallery(user)
@@ -221,13 +231,11 @@ class Settings extends React.Component {
   }
   onChange = e => {
     let obj = this.state.userProfile;
-    console.log('----------------', e)
     obj[e.target.id] = e.target.value;
     this.setState({ userProfile: obj })
   };
   onChangeDateOfBirth = (e) => {
     let date = moment(e.toDate()).format('MM/DD/YYYY');
-    console.log('---------date----', date)
     let obj = this.state.userProfile;
     obj.dateOfBirth = date;
     this.setState({ userProfile: obj })
@@ -242,15 +250,47 @@ class Settings extends React.Component {
     obj.venue[e.target.id] = e.target.value;
     this.setState({ userProfile: obj })
   };
+  onChangeBankInfo = e => {
+    this.setState({ 
+        [e.target.id]: e.target.value })
+  };
   componentWillReceiveProps(nextProps) {
+    if (nextProps.user.bankInfo !== null && nextProps.user.bankInfo !== undefined) {
+      this.setState({
+             userId: nextProps.user.bankInfo.userId,
+      ibanNumber: nextProps.user.bankInfo.ibanNumber,
+    accountNumber: nextProps.user.bankInfo.accountNumber,
+    bankName: nextProps.user.bankInfo.bankName,
+    bankAddress: nextProps.user.bankInfo.bankAddress,
+    swiftCode: nextProps.user.bankInfo.swiftCode,
+    fullName: nextProps.user.bankInfo.fullName
+      });
+    } 
     this.setState({
       userProfile: nextProps.user.payload,
       scheduale: nextProps.user.scheduale,
       gallery: nextProps.user.gallery
+
         })
   };
+  
+  updateBankDetails = () => {
+    let data = {
+    bankInfo : {
+      ibanNumber: this.state.ibanNumber,
+      accountNumber: this.state.accountNumber,
+      bankName: this.state.bankName,
+      bankAddress: this.state.bankAddress,
+      swiftCode: this.state.swiftCode,
+      fullName: this.state.fullName,
+      } }
+    this.props.createOrUpdateBankInfo(data);
+    this.toggleModalBank();
+  }
 
   render() {
+    const loading = !this.props.user.loading;
+    console.log('--------------------', this.state.userId)
     return (
       <>
         <div className="content"
@@ -264,8 +304,7 @@ class Settings extends React.Component {
             <NotificationAlert ref="notificationAlert" />
           </div>
           <Container>
-            <Row>
-          
+            <Row>        
               <Col lg="3"/>
               <Col lg="3">
                 <Card className="card-settings" style={{
@@ -364,8 +403,8 @@ class Settings extends React.Component {
                       <label>Expert ID</label>
                       <Input
                         disabled
-                        defaultValue="120"
-                        type="number"
+                        value={this.state.userId}
+                        type="string"
                       />
                     </FormGroup>
                   </Col>
@@ -373,8 +412,10 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Full Name</label>
                       <Input
-                        defaultValue="Adam Schwerbatsky"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.fullName}
                         type="text"
+                        id="fullName"
                       />
                     </FormGroup>
                   </Col>
@@ -384,8 +425,10 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>IBAN number</label>
                       <Input
-                        defaultValue="EEXX-XXXX-XXXX-1290"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.ibanNumber}
                         type="text"
+                        id="ibanNumber"
                       />
                     </FormGroup>
                   </Col>
@@ -393,8 +436,10 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Account number</label>
                       <Input
-                        defaultValue="EEXX-XXXX-XXXX-1290"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.accountNumber}
                         type="text"
+                        id="accountNumber"
                       />
                     </FormGroup>
                   </Col>
@@ -402,19 +447,24 @@ class Settings extends React.Component {
                 <Row style={{ marginTop: "30px" }}>
                   <Col className="pr-md-1" md="6">
                     <FormGroup>
-                      <label>Account number</label>
+                      <label>Bank Name</label>
                       <Input
-                        defaultValue="Swedish Hepsta Bank LLC"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.bankName}
                         type="text"
+                        id="bankName"
                       />
                     </FormGroup>
                   </Col>
                   <Col className="pl-md-1" md="6">
                     <FormGroup>
+                      
                       <label>Bank Address</label>
                       <Input
-                        defaultValue="Hepstada St. 112, 14052, Tallinn, Estonia"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.bankAddress}
                         type="text"
+                        id="bankAddress"
                       />
                     </FormGroup>
                   </Col>
@@ -424,8 +474,10 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Swift Code</label>
                       <Input
-                        defaultValue="LOAA12E"
+                      onChange={this.onChangeBankInfo}
+                        value={this.state.swiftCode}
                         type="text"
+                        id="swiftCode"
                       />
                     </FormGroup>
                   </Col>
@@ -435,6 +487,7 @@ class Settings extends React.Component {
                     <Button className="btn-block"
                       color="success"
                       type="button"
+                      onClick={this.updateBankDetails}
                     >
                       Save
                   </Button>
@@ -460,7 +513,7 @@ class Settings extends React.Component {
 
             </div>
             <ModalBody >
-              { (this.state.userProfile) ? (
+              { (loading && this.state.userProfile) ? (
               <div className="content">
                 <Row>
                   <Col className="pr-md-1" md="6">
@@ -995,5 +1048,5 @@ function mapStateToProp(state) {
 }
 export default connect(
   mapStateToProp,
-  { getCurrentExpert, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery }
+  { getCurrentExpert, getBankInfo, createOrUpdateBankInfo, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery }
 )(Settings);

@@ -7,12 +7,16 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("/login", userData)
+    .post("/expert/login", userData)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
+      console.log('-----------', decoded.id);
+      localStorage.setItem("userId", decoded.id);
+      localStorage.setItem("userRole", decoded.role);
+      localStorage.setItem("userEmail", decoded.email);
       dispatch(setCurrentUser(decoded));
     })
     .catch(err =>

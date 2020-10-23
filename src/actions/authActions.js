@@ -13,7 +13,6 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-      console.log('-----------', decoded.id);
       localStorage.setItem("userId", decoded.id);
       localStorage.setItem("userRole", decoded.role);
       localStorage.setItem("userEmail", decoded.email);
@@ -22,7 +21,7 @@ export const loginUser = userData => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err
       })
     );
 };
@@ -45,6 +44,9 @@ export const setUserLoading = () => {
 // Log user out
 export const logoutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userRole");
+  localStorage.removeItem("userEmail");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
 };

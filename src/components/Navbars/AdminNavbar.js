@@ -1,6 +1,8 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import { logoutUser } from "actions/authActions";
+import { connect } from "react-redux";
 
 // reactstrap components
 import {
@@ -153,7 +155,9 @@ class AdminNavbar extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Log out</DropdownItem>
+                      <DropdownItem className="nav-item"
+                      onClick={this.props.logoutUser}
+                      >Log out</DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
@@ -184,5 +188,11 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-
-export default AdminNavbar;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(AdminNavbar);

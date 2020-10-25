@@ -31,8 +31,8 @@ class Services extends React.Component {
         duration: '1h'
       },
       category: {
-        categoryName: '',
-        categoryId: ''
+        categoryName: 'Hairdressing',
+        categoryId: '5f88fcccedded2c5d5b7119c'
       }
     };
   }
@@ -48,7 +48,7 @@ class Services extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       categories: nextProps.service.categories,
-      services: nextProps.service.services
+      services: nextProps.service.services,
     })
   };
   toggleModalSearch = () => {
@@ -57,7 +57,6 @@ class Services extends React.Component {
     });
   };
   editService = (service) => {
-    console.log('----------here--------', service)
     this.setState({
       updatedService: service
     })
@@ -112,7 +111,6 @@ class Services extends React.Component {
     })
   };
   toggleModal = (state, service) => {
-    console.log('--------state-------', this.state[state])
     this.setState({
       [state]: !this.state[state],
       deletedService: service
@@ -129,7 +127,6 @@ class Services extends React.Component {
     this.setState({ updatedService: obj })
   }
   render() {
-console.log('--------this.state.services----------',this.state.services);
     const loading = !this.props.service.loading;
     return (
       <>

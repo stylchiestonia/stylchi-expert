@@ -21,7 +21,7 @@ class Safety extends React.Component {
                 </div>
                   <div className="pr-md-5 mt-4">              
                     <p>
-                    With the spread of COVID-19, the importance of safe practices has become the primary concern for service providers and customers. As a strong advocate for safe and hygienic practices in the beauty and personal care industry, Arzoou commits to...
+                    With the spread of COVID-19, the importance of safe practices has become the primary concern for service providers and customers. As a strong advocate for safe and hygienic practices in the beauty and personal care industry, Stylchi commits to follow the guidelines given by The Estonian Health Board.
                     </p>
                     <div className="mt-5">
                     <a href=""

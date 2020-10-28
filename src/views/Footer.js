@@ -49,7 +49,7 @@ class Footer extends React.Component {
                 </Button>
                 <Button
                   className="btn-icon-only rounded-circle"
-                  href="https://www.facebook.com/stylchi"
+                  href="https://www.linkedin.com/company/stylchi/"
                 >
                     <span className="btn-inner--icon">
                   <i className="fa fa-linkedin" aria-hidden="true" />

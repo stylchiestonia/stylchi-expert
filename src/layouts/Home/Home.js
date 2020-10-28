@@ -24,10 +24,8 @@ class Home extends React.Component {
     render() {
       return (
         <>
-        <div className="wrapper">
-          <div
-            className=""
-            ref="mainPanel">
+        <div>
+          
              <HomeNavbar />
              <Vision />
              <Benefits />
@@ -37,7 +35,7 @@ class Home extends React.Component {
              <Safety />  
              <Footer />         
           
-          </div>
+      
         </div>
         
          

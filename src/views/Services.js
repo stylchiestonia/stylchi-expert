@@ -110,6 +110,7 @@ class Services extends React.Component {
   onChangeCategory = (event) => {
     let items = [...this.state.categories];
     let item = items.find(x => x.categoryName === event.target.value);
+    console.log('------------', item )
     this.setState({
       category: {
         categoryName: item.categoryName,

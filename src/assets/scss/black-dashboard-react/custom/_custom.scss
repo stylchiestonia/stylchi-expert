@@ -169,6 +169,61 @@
       }
        
 }
+.main-footer {
+  background: #000;
+  .credits{
+    text-align: center;
+    font-family: Poppins;
+    color: rgba(112, 106, 106, 0.61);
+    font-size: 16px;
+  }
+  .title{
+    font-family: Poppins;
+    font-size: 40px;
+    line-height: 32px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 11.85px;
+  }
+  .title-link{
+    font-family: Poppins;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 11.85px;
+  }
+  .link{
+    font-family: Poppins;
+    font-size: 15px;
+    line-height: 32px;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+  .footer-btn{
+    color: #000;
+  }
+  .btn-icon-only{
+    width: 2.375rem;
+    height: 2.375rem;
+    padding: 0;
+    align-items: center;
+    
+  }
+  .btn-inner--icon {
+    width: 2.375rem;
+    height: 2.375rem;
+    top: 10px
+  }
+}
+.dark .benefits{
+  font-family: Poppins;
+  font-size: 35px;
+  line-height: 32px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 50px;
+}
 .book-now .title {
   font-family: Poppins;
   font-size: 35px;

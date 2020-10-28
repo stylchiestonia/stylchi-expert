@@ -63,12 +63,12 @@ Brilliant software and a 1st class company. I would recommend to anyone and my s
                   <div className="list-unstyled mt-5">
                   <h1>What our customers are saying</h1>
                   </div>
-                  <div class="icons-block d-flex mt-4">
-            <div class="icon position-relative">
-              <span><i class="fa fa-angle-left"></i></span>
+                  <div className="icons-block d-flex mt-4">
+            <div className="icon position-relative">
+              <span><i className="fa fa-angle-left"></i></span>
             </div>
-            <div class="icon position-relative">
-              <span><i class="fa fa-angle-right"></i></span>
+            <div className="icon position-relative">
+              <span><i className="fa fa-angle-right"></i></span>
             </div>
           </div>
                   </div>

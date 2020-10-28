@@ -14,14 +14,14 @@ import PrivateRoute from 'private-route/PrivateRoute';
 
 import AdminLayout from 'layouts/Admin/Admin.js';
 import AuthLayout from 'layouts/Auth/Auth.js';
-
+import HomeLayout from 'layouts/Home/Home.js';
 
 import 'assets/scss/black-dashboard-react.scss';
 import 'assets/css/nucleo-icons.css';
 import 'react-datetime/css/react-datetime.css';
 
 const hist = createBrowserHistory();
-axios.defaults.baseURL = 'https://stylchi-backend-293213.ew.r.appspot.com/api'
+axios.defaults.baseURL = 'http://localhost:5000/api'
 
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -38,8 +38,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
       <Route path='/auth/login' component={AuthLayout} />
+      <Route path='/' render={props => <HomeLayout {...props} />} />
       <Switch>
-      <PrivateRoute path='/' component={AdminLayout} />
         <PrivateRoute path='/admin' component={AdminLayout} />
       </Switch>
     </Router>

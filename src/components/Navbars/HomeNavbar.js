@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {withRouter} from 'react-router-dom';
+
 // JavaScript plugin that hides or shows a component based on your scroll
 import Headroom from "headroom.js";
 // reactstrap components
@@ -13,17 +15,22 @@ import {
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
   Nav,
   Container,
   Row,
   Col
 } from "reactstrap";
-
 class HomeNavbar extends React.Component {
+
+  routeChange=()=> {
+    // let path = `/auth/login`;
+    // console.log('------------------', path);
+    // this.props.history.push(path);
+    // console.log('------------------',  this.props.history);
+  }
+  
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
-    // initialise
     headroom.init();
   }
   state = {
@@ -82,15 +89,7 @@ class HomeNavbar extends React.Component {
                 </div>
             
                 <Nav className="align-items-lg-center ml-lg-auto" navbar>
-                  <NavItem nav>
-                  <NavLink
-                      className="nav-link-icon"
-                      to="/admin/dashboard"
-                      tag={Link}
-                    >
-                      <span className="nav-link-inner--text">For Partners</span>
-                    </NavLink>
-                    </NavItem>  
+                  
                 <UncontrolledDropdown 
                 nav>
                     <DropdownToggle nav>
@@ -136,6 +135,7 @@ class HomeNavbar extends React.Component {
                     <Button
                       target="_blank"
                       color="warning"
+                      onClick={this.routeChange}
                       style={{
                         height:'50px',
                         display: 'inline-block',
@@ -158,4 +158,4 @@ class HomeNavbar extends React.Component {
   }
 }
 
-export default HomeNavbar;
+export default withRouter(HomeNavbar);

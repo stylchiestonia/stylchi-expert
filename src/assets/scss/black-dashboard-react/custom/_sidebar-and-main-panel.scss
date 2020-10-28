@@ -8,6 +8,10 @@
     height: auto;
   }
 }
+.dark{
+  background: #1E1E2E;
+  padding-top: 50px;
+}
 
 .sidebar-wrapper ul li div.collapse ul li div.collapse ul li a,
 .sidebar-wrapper ul li div.collapse ul li div.collapsing ul li a,
@@ -668,7 +672,9 @@
     .content {
       padding-left: 30px;
     }
+   
   }
+
 
   .nav-open{
     .main-panel{

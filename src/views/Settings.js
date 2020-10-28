@@ -50,6 +50,7 @@ class Settings extends React.Component {
 
   constructor(props) {
     super(props);
+    this.fileInput = React.createRef()
     this.state = {
       userId: '',
       modalBank: false,
@@ -187,7 +188,13 @@ class Settings extends React.Component {
     // }
     console.log('----------', this.state.image)
   }
+  triggerInputFile = () => {
+    if (this.fileInput.current !== undefined && this.fileInput.current.click !== undefined)
+        this.fileInput.current.click()
+}
+
   onChangeImage = (event) => {
+    console.log('---on change image-------')
     if (event.target.files && event.target.files[0]) {
       this.setState({ image: event.currentTarget.files[0] })
       // let imageFormObj = new FormData();
@@ -290,7 +297,6 @@ class Settings extends React.Component {
 
   render() {
     const loading = !this.props.user.loading;
-    console.log('--------------------', this.state.userId)
     return (
       <>
         <div className="content"
@@ -769,19 +775,12 @@ class Settings extends React.Component {
             <ModalBody >
               <div className="content">
                 <Row className="justify-content-center">
-                  <input
-                    accept="image/*"
-                    className="filetype"
-                    name="image"
-                    onChange={(e) => this.onChangeImage(e)}
-                    id="contained-button-file"
-                    type="file"
-                  />
-                </Row>
-                <Row className="justify-content-center">
-                <Button color='neutral'             
+                <div className='content'>
+                <Button
+                    color='neutral'
+                    onClick={() => this.triggerInputFile()}
                 >
-                  <img
+                   <img
                     type="file"
                     className="rounded-circle"
                     alt="..."
@@ -790,20 +789,30 @@ class Settings extends React.Component {
                       width: '100px'
                     }}
                     src={require("assets/img/upload_button.png")}
-                    onClick={(e) => this.imageUpload(e)}
                   />
-                  </Button>
-                  <input type="file" style={{display:'none'}} /> 
+
+                </Button>
+
+                <input
+                    ref={this.fileInput}
+                    type='file'
+                    style={{
+                      opacity: '0%', 
+        position: 'absolute'
+                    }}
+                    onChange={(e) => this.onChangeImage(e)}
+                />
+            </div>
                 </Row>
                 <Row style={{ marginTop: "30px" }} className="justify-content-center">
-                  Upload Image
+                  Upload Image(s)
            </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
                     <Swiper
                       effect='coverflow'
                       navigation
-                      slidesPerView='auto'
+                      slidesPerView={3}
                       pagination={{ clickable: true }}
                       grabCursor='true'
                       coverflow={{
@@ -816,16 +825,14 @@ class Settings extends React.Component {
                       observer='true'
                       onSlideChange={() => console.log('slide change')}
                     >
-                      {(this.state.gallery) ? this.state.gallery.map(image => {
+                      {(this.state.gallery) ? this.state.gallery.map((image, index) => {
                          
-                         return <SwiperSlide key={image._id}><img
+                         return <SwiperSlide key={index}><img
                             alt="..."
                             src={image.imageUrl}
                           />
                           </SwiperSlide>
-                      }) : (
-                        <div></div>
-                      )}
+                      }) :false}
                      
                     </Swiper>
 

@@ -32,7 +32,7 @@ class Safety extends React.Component {
                     >
                     Learn more
                         {" "}
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <i className="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                         
                     </div>

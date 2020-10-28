@@ -91,7 +91,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/venue_book.png")}
                   />
                   </div>
-                  <h3 class="title">Book</h3>
+                  <h3 className="title">Book</h3>
                    <p>
                    Search for the service you need, select a suitable expert you want to visit, and book a Venue appointment.
                    </p>                
@@ -108,7 +108,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/venue_order.png")}
                   />
                   </div>
-                  <h3 class="title mt-3">Be On Time</h3>
+                  <h3 className="title mt-3">Be On Time</h3>
                    <p>
                    Reach the venue at the scheduled time.
                    </p>                
@@ -124,7 +124,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/venue_pay.png")}
                   />
                   </div>
-                  <h3 class="title mt-3">Pay</h3>
+                  <h3 className="title mt-3">Pay</h3>
                    <p>
                    Pay in cash or with a credit card and enjoy the service!
                    </p>                
@@ -144,7 +144,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/home_book.png")}
                   />
                   </div>
-                  <h3 class="title mt-3">Book</h3>
+                  <h3 className="title mt-3">Book</h3>
                    <p>
                    Search for the service you need, select a suitable expert, choose a payment method, and book a Home appointment.
                    </p>                
@@ -161,7 +161,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/home_expert.png")}
                   />
                   </div>
-                  <h3 class="title mt-3" >Your Beauty Expert Arrives</h3>
+                  <h3 className="title mt-3" >Your Beauty Expert Arrives</h3>
                    <p>
                    The Beauty Expert arrives at your location. Choose a suitable spot to avail your services, and enjoy!
                    </p>                
@@ -177,7 +177,7 @@ class ServiceBooking extends React.Component {
                     src={require("assets/img/theme/home_pay.png")}
                   />
                   </div>
-                  <h3 class="title">Pay</h3>
+                  <h3 className="title">Pay</h3>
                    <p>
                    Pay the expert in cash, unless you chose to pay with a credit card or your Stylchi wallet at the time of booking.
                    </p>                

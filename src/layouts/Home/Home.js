@@ -1,13 +1,12 @@
 import React from "react";
 import HomeNavbar from "components/Navbars/HomeNavbar.js";
-import Hero from "components/Hero/Hero.js";
-import ReferFriend from "components/Customer/ReferFriend.js";
+import Vision from "views/Vision.js";
 import ServiceBooking from "components/Customer/ServiceBooking.js";
 import Ratings from "components/Customer/Ratings.js";
 import Safety from "components/Customer/Safety.js";
-import BookNow from "components/Customer/BookNow.js";
-import Deals from "components/Customer/Deals.js";
-
+import Benefits from "views/Benefits.js";
+import GetStarted from "views/GetStarted.js";
+import Footer from "views/Footer.js";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -30,13 +29,13 @@ class Home extends React.Component {
             className=""
             ref="mainPanel">
              <HomeNavbar />
-             <Hero />
-             <BookNow />
-             <Deals />
+             <Vision />
+             <Benefits />
+             <GetStarted />
              <ServiceBooking />
-             <ReferFriend />
              <Ratings />
-             <Safety />           
+             <Safety />  
+             <Footer />         
           
           </div>
         </div>

@@ -222,6 +222,10 @@
 
 .card-body{
   padding: $card-spacer-y;
+  p {
+    line-height: normal;
+    font-size: small;
+  }
 }
 
 @include media-breakpoint-down(sm) {

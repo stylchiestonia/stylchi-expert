@@ -23,7 +23,14 @@ class Services extends React.Component {
       setDropdownOpen: false,
       categories: [],
       services: [],
-      updatedService: {},
+      updatedService: {
+        serviceName: '',
+        categoryId: '',
+        categoryName: '',
+        duration: '',
+        price: ''
+
+      },
       deletedService: {},
       newService: {
         serviceName: '',
@@ -121,10 +128,15 @@ class Services extends React.Component {
     obj[e.target.id] = e.target.value;
     this.setState({ newService: obj })
   }
-  onChangeUpdateService = e => {
+  onChangeUpdateService = event => {
     let obj = this.state.updatedService;
-    obj[e.target.id] = e.target.value;
-    this.setState({ updatedService: obj })
+    if (event.target.id === 'category') {
+      let items = [...this.state.categories];
+      let item = items.find(x => x.categoryName === event.target.value);
+      obj['categoryId'] = item._id;
+    }
+    obj[event.target.id] = event.target.value;
+    this.setState({ updatedService: obj });
   }
   render() {
     const loading = !this.props.service.loading;
@@ -146,8 +158,8 @@ class Services extends React.Component {
           </Row>
           { (loading) ? (
           <Container>
-            {(this.state.services) ? (Object.keys(this.state.services).map(key =>
-              <Row>
+            {(this.state.services) ? (Object.keys(this.state.services).map((key, i) =>
+              <Row key={i}>
                 <Col style={{
                   marginTop: '20px'
                 }}>
@@ -155,7 +167,7 @@ class Services extends React.Component {
                   <ListGroup>
                     { 
                     (this.state.services) ? (this.state.services[key].map(service =>
-                      <ListGroupItem className="d-flex justify-content-between align-items-center">
+                      <ListGroupItem key={service._id} className="d-flex justify-content-between align-items-center">
                         <span> {service.serviceName}{" "}</span>
                         <span> {service.duration}{" "}</span>
                         <span> €{service.price}{" "}</span>
@@ -371,7 +383,7 @@ class Services extends React.Component {
                         <Input
                           required
                           data-trigger=""
-                          id="category"
+                          id="categoryName"
                           type="select"
                           onChange={this.onChangeUpdateService}
                           value={this.state.updatedService.category}

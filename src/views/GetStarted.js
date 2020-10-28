@@ -13,8 +13,8 @@ class Vision extends React.Component {
                   <img
                     alt="..."
                     
-                    className="img-fluid"
-                    src={require("assets/img/theme/getstarted.png")}
+                    className="img-fluid floating"
+                    src={require("assets/img/theme/ipad.png")}
                   />
                 </Col>
                 <Col className="order-md-1" md="6">

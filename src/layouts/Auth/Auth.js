@@ -9,7 +9,7 @@ class AuthLayout extends React.Component {
   
   }
   getRoutes = routes => {
-
+    
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
         return (
@@ -28,17 +28,12 @@ class AuthLayout extends React.Component {
   render() {
     return (
       <>
-        <div className="wrapper">
-          <div
-            className="main-panel"
-            ref="mainPanel"
-          >
+            <div className="content">
             <Switch>
               {this.getRoutes(routes)}
               <Redirect from="*" to="/auth/login"/>
             </Switch>
           </div>
-        </div>
       </>
     );
   }

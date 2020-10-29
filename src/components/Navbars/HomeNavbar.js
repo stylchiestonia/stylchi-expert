@@ -14,6 +14,7 @@ import {
   UncontrolledDropdown,
   NavbarBrand,
   Navbar,
+  NavLink,
   NavItem,
   Nav,
   Container,
@@ -22,13 +23,12 @@ import {
 } from "reactstrap";
 class HomeNavbar extends React.Component {
 
-  routeChange=()=> {
-    // let path = `/auth/login`;
-    // console.log('------------------', path);
-    // this.props.history.push(path);
-    // console.log('------------------',  this.props.history);
+  registerRouteChange=()=> {
+    this.props.history.push("/auth/register");
   }
-  
+  loginRouteChange=()=> {
+    this.props.history.push("/auth/login");
+  }
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
@@ -117,7 +117,23 @@ class HomeNavbar extends React.Component {
                         EN
                       </DropdownItem>
                     </DropdownMenu>
-                  </UncontrolledDropdown>           
+                  </UncontrolledDropdown>  
+                  <NavItem className="d-lg-none">
+                <NavLink
+                  to="/auth/login"
+                  tag={Link}
+                >
+                Login
+                </NavLink>
+              </NavItem> 
+              <NavItem className="d-lg-none">
+                <NavLink
+                   to="/auth/register"
+                   tag={Link}
+                >
+                Sign Up
+                </NavLink>
+              </NavItem>         
                   <NavItem className="d-none d-lg-block ml-lg-4">
                     <Button
                       color="default"
@@ -127,6 +143,7 @@ class HomeNavbar extends React.Component {
                         display: 'inline-block',
                         textAlign: 'center'
                       }}
+                      onClick={this.registerRouteChange}
                     >
                       <span className="nav-link-inner--text ml-1">
                         Sign up
@@ -135,7 +152,7 @@ class HomeNavbar extends React.Component {
                     <Button
                       target="_blank"
                       color="warning"
-                      onClick={this.routeChange}
+                      onClick={this.loginRouteChange}
                       style={{
                         height:'50px',
                         display: 'inline-block',

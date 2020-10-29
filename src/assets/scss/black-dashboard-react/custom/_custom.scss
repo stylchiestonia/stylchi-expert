@@ -248,6 +248,12 @@
 
 
 }
+.top-margin-row {
+  margin-top: 20px;
+}
+.top-margin-row-high {
+  margin-top: 50px;
+}
 .book-card-body {
         background-repeat: no-repeat;
         background-size: cover;
@@ -270,3 +276,29 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+  .link-text {
+color: $default;
+font-weight: bold;
+  }
+ 
+//   @media screen 
+//   and (device-width: 320px) 
+//   and (device-height: 640px) 
+//   and (-webkit-device-pixel-ratio: 2) 
+// {
+//     // insert here your custom styles
+//     .hero-img {
+//        display:none;
+//     }
+// }
+@media only screen 
+and (max-width: 500px) {
+  .hero-img {
+     display: none;
+  }
+}
+.partner-img {
+  height: 110px;
+  width: 100px
+}

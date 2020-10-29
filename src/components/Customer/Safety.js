@@ -23,19 +23,6 @@ class Safety extends React.Component {
                     <p>
                     With the spread of COVID-19, the importance of safe practices has become the primary concern for service providers and customers. As a strong advocate for safe and hygienic practices in the beauty and personal care industry, Stylchi commits to follow the guidelines given by The Estonian Health Board.
                     </p>
-                    <div className="mt-5">
-                    <a href=""
-                    style={{
-                        color:"#000",
-                        fontWeight:"400"
-                    }}
-                    >
-                    Learn more
-                        {" "}
-                        <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                        
-                    </div>
                    
                     </div>
 

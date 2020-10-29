@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "actions/authActions";
 import classnames from "classnames";
+import { Link } from "react-router-dom";
+
 import {
   Button,
   Card,
@@ -13,6 +15,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import bg from "assets/img/flower-back.png";
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,13 +29,13 @@ class Login extends React.Component {
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/admin/dashboard");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/admin/dashboard");
     }
 
     if (nextProps.errors) {
@@ -61,12 +64,18 @@ class Login extends React.Component {
         <Row>
           <Col md='5' className='p-0'>
             <Card className='mb-0'>
-              <CardImg width="100%" className='h-100' src={require("assets/img/theme/auth.png")}>
+              <CardImg width="100%" className='background-tint h-100' src={require("assets/img/theme/auth.png")}>
               </CardImg>
             </Card>
           </Col>
           <Col md='7' className='p-0 '>
             <Card className='h-100 mb-0'>
+            <div className="content"
+          style={{
+            backgroundImage: `url(${bg})`,
+            backgroundPosition: "right top",
+            backgroundRepeat: "no-repeat",
+          }}>
               <CardBody className='mt-4 p-4'>
                 <Row>
                   <Col md="8">
@@ -127,11 +136,20 @@ class Login extends React.Component {
                   </Button>
                   </Col>
                 </Row>
-
+                  <Row className="top-margin-row-high">
+                   
+                    <Col md="8">
+                    <hr/>
+                    Don't have account?&nbsp;&nbsp;&nbsp;<Link className="link-text" to="/auth/register">Sign Up</Link>
+                    </Col>
+                  </Row>
               </CardBody>
+            </div>
+            
             </Card>
           </Col>
         </Row>
+
       </>
     );
   }

@@ -15,7 +15,6 @@ import PrivateRoute from 'private-route/PrivateRoute';
 import AdminLayout from 'layouts/Admin/Admin.js';
 import AuthLayout from 'layouts/Auth/Auth.js';
 import HomeLayout from 'layouts/Home/Home.js';
-
 import 'assets/scss/black-dashboard-react.scss';
 import 'assets/css/nucleo-icons.css';
 import 'react-datetime/css/react-datetime.css';
@@ -31,16 +30,16 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
-    window.location.href = './auth/login';
+    window.location.href = './';
   }
 }
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
-      <Route path='/auth/login' component={AuthLayout} />
-      <Route path='/' render={props => <HomeLayout {...props} />} />
+    <Route   path='/auth' component={AuthLayout} />
+    <Route exact path='/' component={HomeLayout} />
       <Switch>
-        <PrivateRoute path='/admin' component={AdminLayout} />
+        <PrivateRoute exact path='/admin' component={AdminLayout} />
       </Switch>
     </Router>
   </Provider>,

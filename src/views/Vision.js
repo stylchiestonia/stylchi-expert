@@ -12,7 +12,7 @@ class Vision extends React.Component {
                 <Col className="order-md-2" md="6">
                   <img
                     alt="..."
-                    className="img-fluid"
+                    className="img-fluid hero-img"
                     src={require("assets/img/theme/hero.png")}
                   />
                 </Col>

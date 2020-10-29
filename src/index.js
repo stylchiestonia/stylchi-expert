@@ -39,7 +39,7 @@ ReactDOM.render(
     <Route   path='/auth' component={AuthLayout} />
     <Route exact path='/' component={HomeLayout} />
       <Switch>
-        <PrivateRoute exact path='/admin' component={AdminLayout} />
+        <PrivateRoute path='/admin' component={AdminLayout} />
       </Switch>
     </Router>
   </Provider>,

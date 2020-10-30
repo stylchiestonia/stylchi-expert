@@ -5,14 +5,11 @@ import { getBookings } from "actions/bookingActions";
 
 // reactstrap components
 import {
-  InputGroup,
-  Button,
   UncontrolledCollapse,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
-  Input,
   Navbar,
   NavItem,
   NavLink,

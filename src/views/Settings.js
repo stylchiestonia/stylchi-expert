@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactDatetime from "react-datetime";
 import moment from "moment";
-import { getCurrentExpert, getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery , updateImage} from "actions/userActions";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
-// import { Swiper, SwiperSlide } from 'swiper/react';
+import { getCurrentExpert, getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery, updateImage } from "actions/userActions";
 import Gallery from 'react-grid-gallery';
 
 import 'swiper/swiper.scss';
@@ -21,15 +19,11 @@ import {
   Row,
   Col,
   Container,
-  Table
+  Table,
+  Spinner
 } from "reactstrap";
 import NotificationAlert from "react-notification-alert";
 import bg from "assets/img/flower-back.png";
-import 'swiper/components/effect-coverflow/effect-coverflow.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-SwiperCore.use([EffectCoverflow]);
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 class Settings extends React.Component {
   notify = place => {
@@ -71,7 +65,7 @@ class Settings extends React.Component {
     super(props);
     this.fileInput = React.createRef()
     this.state = {
-      notify: '',
+      isSubmitting: false,
       userId: '',
       modalBank: false,
       modalPersonalDetails: false,
@@ -122,6 +116,7 @@ class Settings extends React.Component {
         }
       }
     }
+
     this.onSelectImage = this.onSelectImage.bind(this);
   }
   onEdit = (id) => {
@@ -166,19 +161,38 @@ class Settings extends React.Component {
     this.props.getExpertGallery(user);
   }
   onRemoveImage() {
-   const data= {
-     images: this.state.images
-   }
-    this.props.updateImage(data).then(res => {
-      const user = {
-        role: 'expert'
-      };
-      this.props.getExpertGallery(user);
-    }).then(
-      this.notify('tr')
-    ).catch(error => {
-    this.notify('tr')
-    })
+    console.log('------canDel--------');
+
+    let canDel = false;
+    for (const img of this.state.images) {
+      console.log('------here--------');
+      if (img.isSelected) {
+        canDel = true;
+        //return
+      }
+    }
+    console.log('------canDel--------', canDel);
+    if (canDel) {
+      const data = {
+        images: this.state.images
+      }
+      this.setState({
+        isSubmitting: true
+      })
+      this.props.updateImage(data).then(res => {
+        const user = {
+          role: 'expert'
+        };
+        this.props.getExpertGallery(user);
+      }).then(
+        this.setState({
+          isSubmitting: false
+        })
+      ).catch(error => {
+        this.notify('tr')
+      })
+    }
+
   }
   onSelectImage(index, image) {
     var images = this.state.images.slice();
@@ -226,15 +240,22 @@ class Settings extends React.Component {
   }
 
   onChangeImage = (event) => {
-
+    const maxAllowedSize = 5 * 1024 * 1024;
+    if (event.target.files[0].size > maxAllowedSize) {
+      alert("File is too big!");
+      return
+    };
     if (event.target.files && event.target.files[0]) {
       this.setState({ image: event.currentTarget.files[0] })
       let imageFormObj = new FormData();
       imageFormObj.append("photo", event.target.files[0]);
-      this.notify2("tr");
-      this.toggleModalGallery();
+      this.setState({
+        isSubmitting: true
+      })
       this.props.uploadImage(imageFormObj).then(res => {
-        this.notify("tr")
+        this.setState({
+          isSubmitting: false
+        })
       })
     }
   }
@@ -810,7 +831,7 @@ class Settings extends React.Component {
               <div className="content">
                 <Row className="justify-content-center">
                   <div className='content'>
-                    <Button
+                    {!this.state.isSubmitting && <Button
                       color='neutral'
                       onClick={() => this.triggerInputFile()}
                     >
@@ -825,11 +846,27 @@ class Settings extends React.Component {
                         src={require("assets/img/upload_button.png")}
                       />
 
-                    </Button>
+                    </Button>}
+                    {this.state.isSubmitting && <Button
+                      color='neutral'
+                      disabled
+                      onClick={() => this.triggerInputFile()}
+                    >
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      Uploading...
+
+                    </Button>}
                     <input
+                      accept=".png, .jpg, .jpeg"
                       ref={this.fileInput}
                       type='file'
-                      max-file-size="5"
+                      max-file-size="1048576"
                       style={{
                         opacity: 0,
                         position: 'absolute'
@@ -847,29 +884,27 @@ class Settings extends React.Component {
                 <Row className="justify-content-center">
                   Max Upload Size 5mb
            </Row>
-                <Row className="justify-content-right">
-                  <Col lg="4">
-                    <Button className="btn-icon pl-md-5" color="warning" size="sm" onClick={() => this.onRemoveImage()}>
-                      <i className="fa fa-trash" />
-                    </Button>
+                <Row className="justify-content-flex-end">
+                  <Col>
+                    {((this.state.images && this.state.images.length > 0) && !this.state.isSubmitting) &&
+                      <div style={{
+                        textAlign: "right"
+                      }}>
+                        <Button className="btn-icon pl-md-5" color="warning" size="sm" onClick={() => this.onRemoveImage()}>
+                          <i className="fa fa-trash" />
+                        </Button></div>}
+
                   </Col>
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
-                    <div style={{
-                      display: "block",
-                      minHeight: "1px",
-                      width: "100%",
-                      border: "1px solid #ddd",
-                      overflow: "auto"
-                    }}>
-
+                    {this.state.images ?
                       <Gallery
                         images={this.state.images}
                         onSelectImage={this.onSelectImage}
                         lightboxWidth={1536}
                       />
-                    </div>
+                      : false}
                   </Col>
                 </Row>
               </div>

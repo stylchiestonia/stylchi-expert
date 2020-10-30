@@ -12,9 +12,10 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/register", userData)
     .then(res => 
-      dispatch({
+      {dispatch({
         type: USER_REGISTERED
-      })).then(
+      })}
+      ).then(
         history.push("/thank-you")
       ).catch(err =>
       dispatch({

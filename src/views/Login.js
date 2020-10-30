@@ -138,7 +138,7 @@ class Login extends React.Component {
                 </Row>
                 <Row>
                   <Col md='4'>
-                    { !this.props.auth.loading &&  <Button className="btn-block"
+                    <Button className="btn-block"
                       color="success"
                       type="button"
                       size="lg"
@@ -147,19 +147,7 @@ class Login extends React.Component {
                       }}
                     >
                       Login
-                  </Button>}
-                  { this.props.auth.loading &&  <Button className="btn-block"
-                      color="success"
-                      type="button"
-                      disabled
-                      size="lg"
-                      onClick={() => {
-                        this.handleLogin();
-                      }}
-                    >
-                      Login
-                  </Button>}
-                   
+                  </Button>
                   </Col>
                 </Row>
                   <Row className="top-margin-row-high">

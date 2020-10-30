@@ -259,21 +259,13 @@ class Register extends React.Component {
                 </Row>
                 <Row className="top-margin-row">
                   <Col md='4'>
-                    { !this.props.loading && <Button className="btn-block"
+                    <Button className="btn-block"
                       color="success"
                       type="submit"
                       size="lg"
                     >
                       Get Started
-                  </Button>}
-                  { this.props.loading && <Button className="btn-block"
-                      color="success"
-                      disabled
-                      type="submit"
-                      size="lg"
-                    >
-                      Get Started
-                  </Button>}
+                  </Button>
                   </Col>
                  
                 </Row>

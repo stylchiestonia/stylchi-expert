@@ -24,6 +24,7 @@ export default function (state = initialState, action) {
       };
 
     case USER_REGISTERED:
+      console.log('--------USER_REGISTERED----------')
       return {
         ...state,
         loading: false

@@ -194,16 +194,13 @@ class Settings extends React.Component {
 }
 
   onChangeImage = (event) => {
-    console.log('---on change image-------')
+   
     if (event.target.files && event.target.files[0]) {
+      console.log('---on change image-------',event.target.files[0])
       this.setState({ image: event.currentTarget.files[0] })
-      // let imageFormObj = new FormData();
-      // imageFormObj.append("imageName", "5f89b74c785a191b10dab1ac" + Date.now());
-      // imageFormObj.append("imageData", event.target.files[0]);
-      // imageFormObj.append('user_id', "5f89b74c785a191b10dab1ac");
-
-      // console.log('--imageFormObj--', imageFormObj);
-      // this.props.uploadImage(imageFormObj);
+      let imageFormObj = new FormData();
+      imageFormObj.append("photo", event.target.files[0]);
+      this.props.uploadImage(imageFormObj);
     }
   }
   handleFromChange = (event) => {
@@ -792,20 +789,22 @@ class Settings extends React.Component {
                   />
 
                 </Button>
-
                 <input
                     ref={this.fileInput}
                     type='file'
                     style={{
-                      opacity: '0%', 
-        position: 'absolute'
+                      opacity: 0,
+                      position: 'absolute'
                     }}
                     onChange={(e) => this.onChangeImage(e)}
                 />
             </div>
                 </Row>
                 <Row style={{ marginTop: "30px" }} className="justify-content-center">
-                  Upload Image(s)
+                  Upload Image(s) 
+           </Row>
+           <Row className="justify-content-center">
+                  Max Upload Limit 5
            </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
@@ -837,14 +836,6 @@ class Settings extends React.Component {
                     </Swiper>
 
                   </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Button className="btn-block"
-                    color="success"
-                    type="button"
-                  >
-                    Save
-                  </Button>
                 </Row>
               </div>
             </ModalBody>

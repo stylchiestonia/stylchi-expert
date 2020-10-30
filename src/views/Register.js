@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "actions/authActions";
-import classnames from "classnames";
+import { registerUser } from "actions/authActions";
+import NotificationAlert from "react-notification-alert";
 import PhoneInput from 'react-phone-input-2';
 import bg from "assets/img/flower-back.png";
 import partner from "assets/img/theme/partner.png";
@@ -17,7 +17,8 @@ import {
   Input,
   FormGroup,
   Row,
-  Col
+  Col,
+  Form
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -25,47 +26,92 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
       email: "",
+      role: "expert",
       password: "",
+      password2: "",
+      language: "ENG",
+      allowContact: false,
       errors: {}
     };
   }
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/admin");
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
     }
   }
-
+  componentDidUpdate() {
+    if(Object.keys(this.state.errors).length !== 0){
+     
+      this.setState({
+        errors: {}
+      });
+      this.notify('tr')
+    }
+  }
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
-
-  handleLogin = () => {
-    const userData = {
+  handleCheckboxChange = event => {
+    const target = event.target;   
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [event.target.id]: value
+    });
+  }
+  handleRegister = (e) => {
+    e.preventDefault();
+    const data = {
+      userData: {
+        firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      phoneNumber: this.state.phoneNumber,
       email: this.state.email,
-      password: this.state.password
+      role: this.state.role,
+      password: this.state.password,
+      password2: this.state.password2,
+      language: this.state.language,
+      allowContact: this.state.allowContact
+      }
     };
-
-    this.props.loginUser(userData);
+    this.props.registerUser(data, this.props.history);
+  };
+  notify = place => {
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+           Error: {this.state.errors.data}
+          </div>
+        </div>
+      ),
+      type: 'warning',
+      icon: "tim-icons icon-bell-55",
+      autoDismiss: 7
+    };
+    this.refs.notificationAlert.notificationAlert(options);
   };
   render() {
-    const { errors } = this.state;
     return (
       <>
         <Row>
+        <div className="react-notification-alert-container">
+            <NotificationAlert ref="notificationAlert" />
+          </div>
           <Col md='5' className='p-0'>
             <Card className='mb-0'>
               <CardImg width="100%" className='background-tint h-100' src={require("assets/img/theme/auth.png")}>
@@ -79,10 +125,9 @@ class Register extends React.Component {
             backgroundImage: `url(${bg})`,
             backgroundPosition: "right top",
             backgroundRepeat: "no-repeat",
-          }}>
-        
-   
+          }}>   
               <CardBody className='mt-3 p-4'>
+              <Form onSubmit={this.handleRegister}>
                 <Row className="row-grid align-items-center">                 
                   <Col md="4">
                   <div className="pr-md-5">  
@@ -94,9 +139,10 @@ class Register extends React.Component {
                   <Col className="pr-md-1" md="4">
                     <FormGroup>
                       <Input
+                      id="firstName"
+                      required
                       placeholder="First Name"
-                        id="firstName"
-                        // value={this.state.userProfile.firstName || ''}
+                        value={this.state.firstName}
                         type="text"
                         onChange={this.onChange}
                       />
@@ -106,10 +152,10 @@ class Register extends React.Component {
                     <FormGroup>
                       <Input
                       placeholder="Second Name"
-                        id="lastName"
-                        // value={this.state.userProfile.lastName || ''}
+                        value={this.state.lastName}
                         onChange={this.onChange}
                         type="text"
+                        id="lastName"
                       />
                     </FormGroup>
                   </Col>
@@ -118,20 +164,13 @@ class Register extends React.Component {
                   <Col md="8">
                     <FormGroup>
                       <Input
+                      required
                         onChange={this.onChange}
                         value={this.state.email}
-                        error={errors.email}
                         id="email"
                         type="email"
-                        className={classnames("", {
-                          invalid: errors.email || errors.emailnotfound
-                        })}
                         placeholder="Enter email"
                       />
-                      <span className="red-text">
-                        {errors.email}
-                        {errors.emailnotfound}
-                      </span>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -139,10 +178,11 @@ class Register extends React.Component {
                   <Col className="pr-md-1" md="4">
                     <FormGroup>
                       <Input
+                      required
                       placeholder="Create a password"
-                        id="firstName"
-                        // value={this.state.userProfile.firstName || ''}
-                        type="text"
+                        id="password"
+                        value={this.state.password}
+                        type="password"
                         onChange={this.onChange}
                       />
                     </FormGroup>
@@ -150,19 +190,23 @@ class Register extends React.Component {
                   <Col className="pl-md-1" md="4">
                     <FormGroup>
                       <Input
+                      required
                       placeholder="Confirm Password"
-                        id="lastName"
-                        // value={this.state.userProfile.lastName || ''}
+                        id="password2"
+                        value={this.state.password2}
                         onChange={this.onChange}
-                        type="text"
+                        type="password"
                       />
                     </FormGroup>
                   </Col>
                 </Row>
                 <Row>
-                  <Col md="8">
-                   
+                  <Col className="pr-md-1" md="6">            
                     <PhoneInput
+                    id="phoneNumber"
+                    required
+                    onChange={phoneNumber => this.setState({ phoneNumber })}
+                        value={this.state.phoneNumber}
                         country={'ee'}
                         inputClass='form-control is-invalid  w-100'
                         inputProps={{
@@ -171,27 +215,42 @@ class Register extends React.Component {
                           }}
                       />                                    
                   </Col>
+                  <Col className="pl-md-1" md="2">
+                  <FormGroup>
+                      <Input
+                        data-trigger=""
+                        id="language"
+                        type="select"
+                        value={this.state.language}
+                        onChange={this.onChange}
+                      >
+                        <option placeholder="true">ENG</option>
+                        <option defaultValue="2">EST</option>
+                        <option defaultValue="3">RUS</option>
+                      </Input>
+                    </FormGroup>
+                  </Col>
                 </Row>
                 <Row className="top-margin-row">
                 <Col className="pr-md-1" md="8">
                 <div className="form-check">
           <label className="form-check-label">
-              <Input className="form-check-input" type="checkbox" value=""/>
+              <Input className="form-check-input" type="checkbox" id="allowContact" value={this.state.allowContact} onChange={this.handleCheckboxChange} />
               You allow us to use the details you enter here to get in touch with you via email and/or phone about becoming our Partner. You can read more about it in our
-              <span className="form-check-sign">
-                  <span className="check"></span>
+              <span className="form-check-sign"  >
+                  <span className="check" ></span>
               </span>{` `}
-          <a href={PartnerPolicy} without rel="noopener noreferrer" target="_blank" className="link-text">Partner Policy</a>
+          <a href={PartnerPolicy} without="true" rel="noopener noreferrer" target="_blank" className="link-text">Partner Policy</a>
           </label>
       </div>
-      <div class="form-check">
+      <div className="form-check">
           <label className="form-check-label">
               <Input className="form-check-input" type="checkbox" value=""/>
               You can find out more about how Stylchi stores, uses and protects your data in our              
                <span className="form-check-sign">
                   <span className="check"></span>
               </span>{` `}
-              <a  href={PrivacyPolicy} without rel="noopener noreferrer" target="_blank" className="link-text">Privacy Policy</a>
+              <a  href={PrivacyPolicy} without="true" rel="noopener noreferrer" target="_blank" className="link-text">Privacy Policy</a>
           </label>{` `}
          
       </div>
@@ -201,11 +260,8 @@ class Register extends React.Component {
                   <Col md='4'>
                     <Button className="btn-block"
                       color="success"
-                      type="button"
+                      type="submit"
                       size="lg"
-                      onClick={() => {
-                        this.handleLogin();
-                      }}
                     >
                       Get Started
                   </Button>
@@ -220,6 +276,7 @@ class Register extends React.Component {
                    
                    </Col>
                  </Row>
+                 </Form>
               </CardBody>
               </div>
             </Card>
@@ -230,7 +287,6 @@ class Register extends React.Component {
   }
 }
 Register.propTypes = {
-  loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -241,5 +297,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { registerUser }
 )(Register);

@@ -1,8 +1,8 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
 import { logoutUser } from "actions/authActions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -72,12 +72,13 @@ class AdminNavbar extends React.Component {
     return (
       <>
         <Navbar
-          className={classNames("navbar-absolute", this.state.color)}
-          expand="lg"
+         className="navbar-main navbar-transparent headroom"
+         expand="lg"
+         id="navbar-main"
         >
           <Container fluid>
             <div className="navbar-wrapper">
-              <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
+              <NavbarBrand href="#pablo" to="/" tag={Link}>
               <img
                   alt="..."
                   src={require("assets/img/brand/stylchi-logo.png")}
@@ -100,46 +101,7 @@ class AdminNavbar extends React.Component {
             </button>
             <Collapse navbar isOpen={this.state.collapseOpen}>
               <Nav className="ml-auto" navbar>
-                <UncontrolledDropdown nav>
-                  <DropdownToggle
-                    caret
-                    color="default"
-                    data-toggle="dropdown"
-                    nav
-                  >
-                    <div className="notification d-none d-lg-block d-xl-block" />
-                    <i className="tim-icons icon-bell-55" />
-                    <p className="d-lg-none">Notifications</p>
-                  </DropdownToggle>
-                  <DropdownMenu className="dropdown-navbar" right tag="ul">
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        Mike John responded to your email
-                      </DropdownItem>
-                    </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        You have 5 more tasks
-                      </DropdownItem>
-                    </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        Your friend Michael is in town
-                      </DropdownItem>
-                    </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        Another notification
-                      </DropdownItem>
-                    </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        Another one
-                      </DropdownItem>
-                    </NavLink>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown nav>
+             <UncontrolledDropdown nav>
                   <DropdownToggle
                     caret
                     color="default"
@@ -151,7 +113,7 @@ class AdminNavbar extends React.Component {
                       <img alt="..." src={require("assets/img/anime3.png")} />
                     </div>
                     <b className="caret d-none d-lg-block d-xl-block" />
-                    <p className="d-lg-none">Log out</p>
+                    <p className="d-lg-none">Settings</p>
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">

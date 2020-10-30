@@ -77,10 +77,10 @@ export const updateCurrentExpert = currentUser => dispatch => {
       .post("expert/gallery/upload", imageData,
       { headers: { 'content-type': 'multipart/form-data' }})
       .then(res => {
-        // dispatch({
-        //     type: FETCH_SCEHDUALE_SUCCESS,
-        //     payload: res.data
-        // });
+        dispatch({
+          type: FETCH_Gallery_SUCCESS,
+          payload: res.data
+        });
       })
       .catch(err =>
         dispatch({

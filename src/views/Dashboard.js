@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
                   <h5 className="card-category">Total appointments</h5>
                   <CardTitle tag="h3">
                     <i className="tim-icons icon-calendar-60 text-info" />{" "}
-                    40
+                    0
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <h5 className="card-category">Total Earnings</h5>
                   <CardTitle tag="h3">
-                    <i className="tim-icons icon-money-coins text-success" /> 3,500€
+                    <i className="tim-icons icon-money-coins text-success" /> 0 €
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -103,7 +103,7 @@ class Dashboard extends React.Component {
                     <i className="tim-icons icon-shape-star" style={{
                       color: "#EB9A13"
                     }} />{" "}
-                    4.5
+                    0/5
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -162,50 +162,13 @@ class Dashboard extends React.Component {
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center">250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
+                        <td className="text-center"></td>
+                        <td className="text-center"></td>
+                        <td className="text-center"></td>
+                        <td className="text-center"></td>
+                        <td className="text-center"></td>
                       </tr>
-                      <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center text-success" style={{
-                          color: "#23BF69"
-                        }}>250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center">250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center">250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center">250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
-                      </tr>
-                      <tr>
-                        <td className="text-center">04-08-2020</td>
-                        <td className="text-center">10</td>
-                        <td className="text-center">250</td>
-                        <td className="text-center">37.5</td>
-                        <td className="text-center">212.5</td>
-                      </tr>
-
+                    
                     </tbody>
                   </Table>
                 </CardBody>

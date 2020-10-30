@@ -34,7 +34,6 @@ class Admin extends React.Component {
   render() {
     return (
       <>
-        <div className="wrapper">
           <div
             className="main-panel"
             ref="mainPanel"
@@ -46,10 +45,9 @@ class Admin extends React.Component {
               <Navbars />
             <Switch>
               {this.getRoutes(routes)}
-              <Redirect from="*" to="/admin/dashboard"/>
+              <Redirect from="*" to="/admin/settings"/>
             </Switch>
           </div>
-        </div>
       </>
     );
   }

@@ -47,6 +47,15 @@ class Navbars extends React.Component {
                 <NavItem>
                     <NavLink
                       className="nav-link-icon"
+                      to="/admin/settings"
+                      tag={Link}
+                    >
+                      <span className="nav-link-inner--text">Settings</span>
+                    </NavLink>
+                  </NavItem>
+                <NavItem>
+                    <NavLink
+                      className="nav-link-icon"
                       to="/admin/dashboard"
                       tag={Link}
                     >
@@ -93,15 +102,7 @@ class Navbars extends React.Component {
                       <span className="nav-link-inner--text">Services</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link-icon"
-                      to="/admin/settings"
-                      tag={Link}
-                    >
-                      <span className="nav-link-inner--text">Settings</span>
-                    </NavLink>
-                  </NavItem>
+                
                 </Nav>
                 <Nav className="ml-auto" navbar>
                 <InputGroup className="search-bar">

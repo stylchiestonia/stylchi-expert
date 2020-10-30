@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "actions/authActions";
-import classnames from "classnames";
 import { Link } from "react-router-dom";
+import NotificationAlert from "react-notification-alert";
 
 import {
   Button,
@@ -42,9 +42,19 @@ class Login extends React.Component {
       this.setState({
         errors: nextProps.errors
       });
+     
     }
   }
 
+  componentDidUpdate() {
+    if(Object.keys(this.state.errors).length !== 0){
+     
+      this.setState({
+        errors: {}
+      });
+      this.notify('tr')
+    }
+  }
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -57,14 +67,34 @@ class Login extends React.Component {
 
     this.props.loginUser(userData);
   };
+  notify = place => {
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+           Error: {this.state.errors.data}
+          </div>
+        </div>
+      ),
+      type: 'warning',
+      icon: "tim-icons icon-bell-55",
+      autoDismiss: 7
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+  };
   render() {
-    const { errors } = this.state;
+    
     return (
       <>
         <Row>
+        <div className="react-notification-alert-container">
+            <NotificationAlert ref="notificationAlert" />
+          </div>
           <Col md='5' className='p-0'>
             <Card className='mb-0'>
-              <CardImg width="100%" className='background-tint h-100' src={require("assets/img/theme/auth.png")}>
+              <CardImg width="100%" className='background-tint' src={require("assets/img/theme/auth.png")}>
               </CardImg>
             </Card>
           </Col>
@@ -90,35 +120,19 @@ class Login extends React.Component {
                       <Input
                         onChange={this.onChange}
                         value={this.state.email}
-                        error={errors.email}
                         id="email"
                         type="email"
-                        className={classnames("", {
-                          invalid: errors.email || errors.emailnotfound
-                        })}
                         placeholder="Enter your email address"
                       />
-                      <span className="red-text">
-                        {errors.email}
-                        {errors.emailnotfound}
-                      </span>
                     </FormGroup>
                     <FormGroup>
                       <Input
                         placeholder="Enter your password"
                         onChange={this.onChange}
                         value={this.state.password}
-                        error={errors.password}
                         id="password"
                         type="password"
-                        className={classnames("", {
-                          invalid: errors.password || errors.passwordincorrect
-                        })}
                       />
-                      <span className="red-text">
-                        {errors.password}
-                        {errors.passwordincorrect}
-                      </span>
                     </FormGroup>
                   </Col>
                 </Row>

@@ -29,6 +29,10 @@ class HomeNavbar extends React.Component {
   loginRouteChange=()=> {
     this.props.history.push("/auth/login");
   }
+  toDashboard=()=> {
+    this.props.history.push("/admin/dashboard");
+
+  }
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
@@ -55,7 +59,7 @@ class HomeNavbar extends React.Component {
       <>
         <header className="header-global">
           <Navbar
-            className="navbar-main navbar-transparent navbar-light headroom"
+            className="navbar-main navbar-transparent headroom"
             expand="lg"
             id="navbar-main"
           >
@@ -118,7 +122,17 @@ class HomeNavbar extends React.Component {
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>  
-                  <NavItem className="d-lg-none">
+                  
+                 { localStorage.jwtToken ? <NavItem className="d-lg-none">
+                <NavLink
+                  to="admin/dashboard"
+                  tag={Link}
+                >
+                Dashboard
+                </NavLink>
+              </NavItem> : 
+              <div>
+              <NavItem className="d-lg-none">
                 <NavLink
                   to="/auth/login"
                   tag={Link}
@@ -133,8 +147,24 @@ class HomeNavbar extends React.Component {
                 >
                 Sign Up
                 </NavLink>
-              </NavItem>         
-                  <NavItem className="d-none d-lg-block ml-lg-4">
+    </NavItem>  </div>}      
+                  {localStorage.jwtToken ?  <NavItem className="d-none d-lg-block ml-lg-4">
+                    <Button
+                      target="_blank"
+                      color="success"
+                      onClick={this.toDashboard}
+                      style={{
+                        height:'50px',
+                        display: 'inline-block',
+                        textAlign: 'center'
+
+                      }}
+                    >
+                      <span className="nav-link-inner--text ml-1">
+                        Dashboard
+                      </span>
+                    </Button>
+                    </NavItem> : <NavItem className="d-none d-lg-block ml-lg-4">
                     <Button
                       color="default"
                       target="_blank"
@@ -164,7 +194,7 @@ class HomeNavbar extends React.Component {
                         Log In
                       </span>
                     </Button>
-                  </NavItem>
+                    </NavItem> }
                 </Nav>
               </UncontrolledCollapse>
             </Container>

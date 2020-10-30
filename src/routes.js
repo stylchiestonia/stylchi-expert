@@ -7,6 +7,13 @@ import Register from "views/Register.js";
 
 var routes = [
   {
+    path: "/settings",
+    name: "Settings",
+    icon: "tim-icons icon-atom",
+    component: Settings,
+    layout: "/admin"
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
@@ -27,13 +34,7 @@ var routes = [
     component: Services,
     layout: "/admin"
   },
-  {
-    path: "/settings",
-    name: "Settings",
-    icon: "tim-icons icon-atom",
-    component: Settings,
-    layout: "/admin"
-  },
+
   /*---------------------- Auth Routes ----------------------------*/
   {
     path: "/login",

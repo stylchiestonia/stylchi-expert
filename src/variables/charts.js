@@ -195,7 +195,7 @@ let chartAppointment = {
           pointHoverBorderWidth: 15,
           pointRadius: 4,
           cutoutPercentage: 0,
-          data: [80, 100]
+          data: [50, 50]
         }
       ]
     };

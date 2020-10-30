@@ -84,13 +84,13 @@ class Footer extends React.Component {
                         <Col md="4">
                         <h1 className="title-link">Legal</h1>
                             <div className="mt-5">
-                                <a className="link" href={PrivacyPolicy} without rel="noopener noreferrer" target="_blank">Privacy policy</a>
+                                <a className="link" href={PrivacyPolicy} without="true" rel="noopener noreferrer" target="_blank">Privacy policy</a>
                             </div>
                             {/* <div className="mt-2">
                                 <a className="link" href="/">Booking policy</a>
                             </div> */}
                             <div className="mt-2">
-                            <a className="link" href={PartnerPolicy} without rel="noopener noreferrer" target="_blank">Partners policy</a>
+                            <a className="link" href={PartnerPolicy} without="true" rel="noopener noreferrer" target="_blank">Partners policy</a>
                             </div>
                         </Col>
                       

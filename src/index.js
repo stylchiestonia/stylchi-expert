@@ -21,7 +21,7 @@ import 'assets/css/nucleo-icons.css';
 import 'react-datetime/css/react-datetime.css';
 
 const hist = createBrowserHistory();
-axios.defaults.baseURL = ' http://localhost:5000/api'
+axios.defaults.baseURL = 'https://stylchi-backend-293213.ew.r.appspot.com/api'
 
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;

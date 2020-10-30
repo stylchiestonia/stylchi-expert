@@ -52,15 +52,15 @@ class Register extends React.Component {
       });
     }
   }
-  componentDidUpdate() {
-    if(Object.keys(this.state.errors).length !== 0){
+  // componentDidUpdate() {
+  //   if(Object.keys(this.state.errors).length !== 0){
      
-      this.setState({
-        errors: {}
-      });
-      this.notify('tr')
-    }
-  }
+  //     this.setState({
+  //       errors: {}
+  //     });
+  //     this.notify('tr')
+  //   }
+  // }
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -86,7 +86,12 @@ class Register extends React.Component {
       allowContact: this.state.allowContact
       }
     };
-    this.props.registerUser(data, this.props.history);
+    this.props.registerUser(data).then(res => {
+      this.props.history.push('/thank-you')
+    }
+  ).catch(error => {
+    this.notify('tr')
+    })
   };
   notify = place => {
     var options = {};

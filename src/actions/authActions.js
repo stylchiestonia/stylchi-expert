@@ -5,26 +5,25 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING} from "./types";
 
 
-export const registerUser = (userData, history) => dispatch => {
-  dispatch({
-    type: USER_LOADING
-})
+export const registerUser = (userData) => dispatch => {
+  return new Promise((resolve, reject) => {
   axios
     .post("/register", userData)
     .then(res => 
-      history.push("/thank-you")).catch(err =>
+      resolve(res))
+      .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
-};
+      reject(err)
+    })
+});
+}
 // Login - get user token
 export const loginUser = userData => dispatch => {
-  dispatch({
-    type: USER_LOADING
-})
-  axios
+  return new Promise((resolve, reject) => {
+    axios
     .post("/expert/login", userData)
     .then(res => {
       const { token } = res.data;
@@ -35,14 +34,18 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem("userRole", decoded.role);
       localStorage.setItem("userEmail", decoded.email);
       dispatch(setCurrentUser(decoded));
+      resolve(res)
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
+      reject(err)
+    }
     );
-};
+});
+}
 
 // Set logged in user
 export const setCurrentUser = decoded => {

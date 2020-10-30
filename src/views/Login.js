@@ -47,13 +47,13 @@ class Login extends React.Component {
   }
 
   componentDidUpdate() {
-    if(Object.keys(this.state.errors).length !== 0){
+    // if(Object.keys(this.state.errors).length !== 0){
      
-      this.setState({
-        errors: {}
-      });
-      this.notify('tr')
-    }
+    //   this.setState({
+    //     errors: {}
+    //   });
+    //   this.notify('tr')
+    // }
   }
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
@@ -65,7 +65,12 @@ class Login extends React.Component {
       password: this.state.password
     };
 
-    this.props.loginUser(userData);
+    this.props.loginUser(userData).then(res => {
+      //toast.success(res.message, { position: toast.POSITION.TOP_CENTER })
+  }
+).catch(error => {
+  this.notify('tr')
+  })
   };
   notify = place => {
     var options = {};
@@ -85,7 +90,6 @@ class Login extends React.Component {
     this.refs.notificationAlert.notificationAlert(options);
   };
   render() {
-    
     return (
       <>
         <Row>

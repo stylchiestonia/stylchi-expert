@@ -167,9 +167,7 @@ class Bookings extends React.Component {
             </ModalBody>
           </Modal>
         </div> ): (
-          <div style={{
-            marginTop: '-100px'
-          }}>
+          <div>
             <img alt='' src={require('assets/img/theme/no_data.png')}>
             </img>        
           </div>

@@ -30,7 +30,7 @@ class HomeNavbar extends React.Component {
     this.props.history.push("/auth/login");
   }
   toDashboard=()=> {
-    this.props.history.push("/admin/dashboard");
+    this.props.history.push("/admin/settings");
 
   }
   componentDidMount() {

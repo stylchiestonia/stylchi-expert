@@ -809,27 +809,41 @@ class Settings extends React.Component {
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
                     <Swiper
+                    loop= 'true'
                       effect='coverflow'
                       navigation
-                      slidesPerView={3}
+                      centeredSlides='true'
+      slidesPerView= {3}
                       pagination={{ clickable: true }}
                       grabCursor='true'
                       coverflow={{
                         rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slidesShadows: true
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+                     
                       }}
+                    
                       observer='true'
                       onSlideChange={() => console.log('slide change')}
                     >
                       {(this.state.gallery) ? this.state.gallery.map((image, index) => {
                          
-                         return <SwiperSlide key={index}><img
+                         return <SwiperSlide key={index} onClick={() => {
+
+                         }}>
+                           <div
+    >
+      <img
                             alt="..."
                             src={image.imageUrl}
-                          />
+                            
+                          >
+                          </img>
+    </div>
+                          
+                         
                           </SwiperSlide>
                       }) :false}
                      

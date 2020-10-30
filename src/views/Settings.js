@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactDatetime from "react-datetime";
 import moment from "moment";
-import { getCurrentExpert,getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
+import { getCurrentExpert, getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
@@ -66,7 +66,7 @@ class Settings extends React.Component {
       scheduale: {
         availability: []
       },
-      slidesPerView:'auto',
+      slidesPerView: 'auto',
       gallery: [],
       ibanNumber: '',
       accountNumber: '',
@@ -108,7 +108,7 @@ class Settings extends React.Component {
       rowKey: id
     })
   }
-  
+
   onCancel = () => {
     const user = {
       role: 'expert'
@@ -134,9 +134,9 @@ class Settings extends React.Component {
       role: 'expert'
     };
     this.setState({
-      userId:  localStorage.getItem('userId') 
+      userId: localStorage.getItem('userId')
     })
-   
+
     this.props.getBankInfo();
     this.props.getCurrentExpert(user);
     this.props.getExpertScheduale(user);
@@ -190,13 +190,13 @@ class Settings extends React.Component {
   }
   triggerInputFile = () => {
     if (this.fileInput.current !== undefined && this.fileInput.current.click !== undefined)
-        this.fileInput.current.click()
-}
+      this.fileInput.current.click()
+  }
 
   onChangeImage = (event) => {
-   
+
     if (event.target.files && event.target.files[0]) {
-      console.log('---on change image-------',event.target.files[0])
+      console.log('---on change image-------', event.target.files[0])
       this.setState({ image: event.currentTarget.files[0] })
       let imageFormObj = new FormData();
       imageFormObj.append("photo", event.target.files[0]);
@@ -255,39 +255,41 @@ class Settings extends React.Component {
     this.setState({ userProfile: obj })
   };
   onChangeBankInfo = e => {
-    this.setState({ 
-        [e.target.id]: e.target.value })
+    this.setState({
+      [e.target.id]: e.target.value
+    })
   };
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.bankInfo !== null && nextProps.user.bankInfo !== undefined) {
       this.setState({
-             userId: nextProps.user.bankInfo.userId,
-      ibanNumber: nextProps.user.bankInfo.ibanNumber,
-    accountNumber: nextProps.user.bankInfo.accountNumber,
-    bankName: nextProps.user.bankInfo.bankName,
-    bankAddress: nextProps.user.bankInfo.bankAddress,
-    swiftCode: nextProps.user.bankInfo.swiftCode,
-    fullName: nextProps.user.bankInfo.fullName
+        userId: nextProps.user.bankInfo.userId,
+        ibanNumber: nextProps.user.bankInfo.ibanNumber,
+        accountNumber: nextProps.user.bankInfo.accountNumber,
+        bankName: nextProps.user.bankInfo.bankName,
+        bankAddress: nextProps.user.bankInfo.bankAddress,
+        swiftCode: nextProps.user.bankInfo.swiftCode,
+        fullName: nextProps.user.bankInfo.fullName
       });
-    } 
+    }
     this.setState({
       userProfile: nextProps.user.payload,
       scheduale: nextProps.user.scheduale,
       gallery: nextProps.user.gallery
 
-        })
+    })
   };
-  
+
   updateBankDetails = () => {
     let data = {
-    bankInfo : {
-      ibanNumber: this.state.ibanNumber,
-      accountNumber: this.state.accountNumber,
-      bankName: this.state.bankName,
-      bankAddress: this.state.bankAddress,
-      swiftCode: this.state.swiftCode,
-      fullName: this.state.fullName,
-      } }
+      bankInfo: {
+        ibanNumber: this.state.ibanNumber,
+        accountNumber: this.state.accountNumber,
+        bankName: this.state.bankName,
+        bankAddress: this.state.bankAddress,
+        swiftCode: this.state.swiftCode,
+        fullName: this.state.fullName,
+      }
+    }
     this.props.createOrUpdateBankInfo(data);
     this.toggleModalBank();
   }
@@ -307,8 +309,8 @@ class Settings extends React.Component {
             <NotificationAlert ref="notificationAlert" />
           </div>
           <Container>
-            <Row>        
-              <Col lg="3"/>
+            <Row>
+              <Col lg="3" />
               <Col lg="3">
                 <Card className="card-settings" style={{
                   textAlign: "center",
@@ -415,7 +417,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Full Name</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.fullName}
                         type="text"
                         id="fullName"
@@ -428,7 +430,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>IBAN number</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.ibanNumber}
                         type="text"
                         id="ibanNumber"
@@ -439,7 +441,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Account number</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.accountNumber}
                         type="text"
                         id="accountNumber"
@@ -452,7 +454,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Bank Name</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.bankName}
                         type="text"
                         id="bankName"
@@ -461,10 +463,10 @@ class Settings extends React.Component {
                   </Col>
                   <Col className="pl-md-1" md="6">
                     <FormGroup>
-                      
+
                       <label>Bank Address</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.bankAddress}
                         type="text"
                         id="bankAddress"
@@ -477,7 +479,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Swift Code</label>
                       <Input
-                      onChange={this.onChangeBankInfo}
+                        onChange={this.onChangeBankInfo}
                         value={this.state.swiftCode}
                         type="text"
                         id="swiftCode"
@@ -516,241 +518,241 @@ class Settings extends React.Component {
 
             </div>
             <ModalBody >
-              { (loading && this.state.userProfile) ? (
-              <div className="content">
-                <Row>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>First Name</label>
-                      <Input
-                        id="firstName"
-                        value={this.state.userProfile.firstName || ''}
-                        type="text"
-                        onChange={this.onChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pl-md-1" md="6">
-                    <FormGroup>
-                      <label>Second Name</label>
-                      <Input
-                        id="lastName"
-                        value={this.state.userProfile.lastName || ''}
-                        onChange={this.onChange}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Phone</label>
-                      <Input
-                        id="phoneNumber"
-                        value={this.state.userProfile.phoneNumber || ''}
-                        onChange={this.onChange}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Email</label>
-                      <Input
-                        id="email"
-                        disabled
-                        value={this.state.userProfile.email || ''}
-                        onChange={this.onChange}
-                        type="email"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Gender</label>
-                      <Input
-                        data-trigger=""
-                        id="gender"
-                        name="gender"
-                        type="select"
-                        value={this.state.userProfile.gender || 'Male'}
-                        onChange={this.onChange}
-                      >
-                        <option placeholder="true">Male</option>
-                        <option defaultValue="2">Female</option>
-                        <option defaultValue="3">Others</option>
-                      </Input>
-                    </FormGroup>
+              {(loading && this.state.userProfile) ? (
+                <div className="content">
+                  <Row>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>First Name</label>
+                        <Input
+                          id="firstName"
+                          value={this.state.userProfile.firstName || ''}
+                          type="text"
+                          onChange={this.onChange}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-md-1" md="6">
+                      <FormGroup>
+                        <label>Second Name</label>
+                        <Input
+                          id="lastName"
+                          value={this.state.userProfile.lastName || ''}
+                          onChange={this.onChange}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Phone</label>
+                        <Input
+                          id="phoneNumber"
+                          value={this.state.userProfile.phoneNumber || ''}
+                          onChange={this.onChange}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Email</label>
+                        <Input
+                          id="email"
+                          disabled
+                          value={this.state.userProfile.email || ''}
+                          onChange={this.onChange}
+                          type="email"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Gender</label>
+                        <Input
+                          data-trigger=""
+                          id="gender"
+                          name="gender"
+                          type="select"
+                          value={this.state.userProfile.gender || 'Male'}
+                          onChange={this.onChange}
+                        >
+                          <option placeholder="true">Male</option>
+                          <option defaultValue="2">Female</option>
+                          <option defaultValue="3">Others</option>
+                        </Input>
+                      </FormGroup>
 
-                  </Col>
-                  <Col className="pr-md-1">
-                    <FormGroup>
-                      <label>Date of Birth</label>
-                      <ReactDatetime
-                        inputProps={{
-                          placeholder: "Select Date"
+                    </Col>
+                    <Col className="pr-md-1">
+                      <FormGroup>
+                        <label>Date of Birth</label>
+                        <ReactDatetime
+                          inputProps={{
+                            placeholder: "Select Date"
+                          }}
+                          timeFormat={false}
+                          value={'' || this.state.userProfile.dateOfBirth}
+                          id="dateOfBirth"
+                          onChange={this.onChangeDateOfBirth}
+
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1">
+                      <label>Residential Address</label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-md-1" md="8">
+                      <FormGroup>
+                        <label>Street</label>
+                        <Input
+                          id="street"
+                          onChange={this.onChangeResidential}
+                          value={'' || this.state.userProfile.residential.street}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="2">
+                      <FormGroup>
+                        <label>No</label>
+                        <Input
+                          type="text"
+                          value={'' || this.state.userProfile.residential.number}
+                          onChange={this.onChangeResidential}
+                          id="number"
+                        />
+                      </FormGroup>
+                    </Col>
+
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>City</label>
+                        <Input
+                          value={'' || this.state.userProfile.residential.city}
+                          type="text"
+                          onChange={this.onChangeResidential}
+                          id="city"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Country</label>
+                        <Input
+                          value={'' || this.state.userProfile.residential.country}
+                          type="text"
+                          onChange={this.onChangeResidential}
+                          id="country"
+                        />
+                      </FormGroup>
+                    </Col>
+
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1">
+                      <label>Venue Address</label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-md-1" md="4">
+                      <FormGroup>
+                        <label>Street</label>
+                        <Input
+                          id="street"
+                          value={'' || this.state.userProfile.venue.street}
+                          onChange={this.onChangeVenue}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="2">
+                      <FormGroup>
+                        <label>No</label>
+                        <Input
+                          value={'' || this.state.userProfile.venue.number}
+                          id="number"
+                          onChange={this.onChangeVenue}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Venue Name (optional)</label>
+                        <Input
+                          type="text"
+                          value={'' || this.state.userProfile.venueName}
+                          id="venueName"
+                          onChange={this.onChange}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>City</label>
+                        <Input
+                          value={'' || this.state.userProfile.venue.city}
+                          id="city"
+                          onChange={this.onChangeVenue}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Country</label>
+                        <Input
+                          value={'' || this.state.userProfile.venue.country}
+                          id="country"
+                          onChange={this.onChangeVenue}
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col className="pr-md-1" md="12">
+                      <FormGroup>
+                        <label>About myself</label>
+                        <Input
+                          id="about"
+                          value={this.state.userProfile.about || ''}
+                          onChange={this.onChange}
+                          placeholder="Write something about yourself which will be visible to public"
+                          type="textarea"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "30px" }}>
+                    <Col>
+                      <Button className="btn-block"
+                        color="success"
+                        type="button"
+                        onClick={() => {
+                          this.handleProfileUpdate();
                         }}
-                        timeFormat={false}
-                        value={'' || this.state.userProfile.dateOfBirth}
-                        id="dateOfBirth"
-                        onChange={this.onChangeDateOfBirth}
-                       
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1">
-                    <label>Residential Address</label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-md-1" md="8">
-                    <FormGroup>
-                      <label>Street</label>
-                      <Input
-                        id="street"
-                        onChange={this.onChangeResidential}
-                        value={ '' || this.state.userProfile.residential.street}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="2">
-                    <FormGroup>
-                      <label>No</label>
-                      <Input
-                        type="text"
-                        value={'' || this.state.userProfile.residential.number}
-                        onChange={this.onChangeResidential}
-                        id="number"
-                      />
-                    </FormGroup>
-                  </Col>
-
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>City</label>
-                      <Input
-                        value={ '' || this.state.userProfile.residential.city}
-                        type="text"
-                        onChange={this.onChangeResidential}
-                        id="city"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Country</label>
-                      <Input
-                        value={ '' || this.state.userProfile.residential.country}
-                        type="text"
-                        onChange={this.onChangeResidential}
-                        id="country"
-                      />
-                    </FormGroup>
-                  </Col>
-
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1">
-                    <label>Venue Address</label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>Street</label>
-                      <Input
-                        id="street"
-                        value={ '' || this.state.userProfile.venue.street}
-                        onChange={this.onChangeVenue}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="2">
-                    <FormGroup>
-                      <label>No</label>
-                      <Input
-                        value={ '' || this.state.userProfile.venue.number}
-                        id="number"
-                        onChange={this.onChangeVenue}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Venue Name (optional)</label>
-                      <Input
-                        type="text"
-                        value={ '' || this.state.userProfile.venueName}
-                        id="venueName"
-                        onChange={this.onChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>City</label>
-                      <Input
-                        value={ '' || this.state.userProfile.venue.city}
-                        id="city"
-                        onChange={this.onChangeVenue}
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Country</label>
-                      <Input
-                         value={ '' || this.state.userProfile.venue.country}
-                         id="country"
-                         onChange={this.onChangeVenue}
-                         type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col className="pr-md-1" md="12">
-                    <FormGroup>
-                      <label>About myself</label>
-                      <Input
-                        id="about"
-                        value={this.state.userProfile.about || ''}
-                        onChange={this.onChange}
-                        placeholder="Write something about yourself which will be visible to public"
-                        type="textarea"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "30px" }}>
-                  <Col>
-                    <Button className="btn-block"
-                      color="success"
-                      type="button"
-                      onClick={() => {
-                        this.handleProfileUpdate();
-                      }}
-                    >
-                      Save
+                      >
+                        Save
                   </Button>
-                  </Col>
-                </Row>
-              </div> ) : (
-                <div></div>
-              )}
+                    </Col>
+                  </Row>
+                </div>) : (
+                  <div></div>
+                )}
             </ModalBody>
           </Modal>
           <Modal
@@ -772,81 +774,85 @@ class Settings extends React.Component {
             <ModalBody >
               <div className="content">
                 <Row className="justify-content-center">
-                <div className='content'>
-                <Button
-                    color='neutral'
-                    onClick={() => this.triggerInputFile()}
-                >
-                   <img
-                    type="file"
-                    className="rounded-circle"
-                    alt="..."
-                    style={{
-                      height: '100px',
-                      width: '100px'
-                    }}
-                    src={require("assets/img/upload_button.png")}
-                  />
+                  <div className='content'>
+                    <Button
+                      color='neutral'
+                      onClick={() => this.triggerInputFile()}
+                    >
+                      <img
+                        type="file"
+                        className="rounded-circle"
+                        alt="..."
+                        style={{
+                          height: '100px',
+                          width: '100px'
+                        }}
+                        src={require("assets/img/upload_button.png")}
+                      />
 
-                </Button>
-                <input
-                    ref={this.fileInput}
-                    type='file'
-                    style={{
-                      opacity: 0,
-                      position: 'absolute'
-                    }}
-                    onChange={(e) => this.onChangeImage(e)}
-                />
-            </div>
+                    </Button>
+                    <input
+                      ref={this.fileInput}
+                      type='file'
+                      max-file-size="5"
+                      style={{
+                        opacity: 0,
+                        position: 'absolute'
+                      }}
+                      onChange={(e) => this.onChangeImage(e)}
+                    />
+                  </div>
                 </Row>
                 <Row style={{ marginTop: "30px" }} className="justify-content-center">
-                  Upload Image(s) 
+                  Upload Image(s)
+           </Row>
+                <Row className="justify-content-center">
+                  Max Upload Limit 5
            </Row>
            <Row className="justify-content-center">
-                  Max Upload Limit 5
+                  Max Upload Size 5mb
            </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
                     <Swiper
-                    loop= 'true'
+                      loop='true'
                       effect='coverflow'
                       navigation
                       centeredSlides='true'
-      slidesPerView= {3}
+                      slidesPerView={3}
                       pagination={{ clickable: true }}
                       grabCursor='true'
                       coverflow={{
                         rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true,
-                     
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                        slideShadows: true,
+
                       }}
-                    
+
                       observer='true'
                       onSlideChange={() => console.log('slide change')}
                     >
                       {(this.state.gallery) ? this.state.gallery.map((image, index) => {
-                         
-                         return <SwiperSlide key={index} onClick={() => {
 
-                         }}>
-                           <div
-    >
-      <img
-                            alt="..."
-                            src={image.imageUrl}
-                            
+                        return <SwiperSlide key={index} onClick={() => {
+
+                        }}>
+                          <div
                           >
-                          </img>
-    </div>
-                          
-                         
-                          </SwiperSlide>
-                      }) :false}
-                     
+                            <img
+                              alt="..."
+                              src={image.imageUrl}
+
+                            >
+                            </img>
+                          </div>
+
+
+                        </SwiperSlide>
+                      }) : false}
+
                     </Swiper>
 
                   </Col>

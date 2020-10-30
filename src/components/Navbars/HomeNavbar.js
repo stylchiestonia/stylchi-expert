@@ -114,10 +114,10 @@ class HomeNavbar extends React.Component {
                       <b className="caret d-none d-lg-block d-xl-block" />
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem to="/landing-page" tag={Link}>
+                      <DropdownItem >
                         RUS
                       </DropdownItem>
-                      <DropdownItem to="/profile-page" tag={Link}>
+                      <DropdownItem>
                         EN
                       </DropdownItem>
                     </DropdownMenu>

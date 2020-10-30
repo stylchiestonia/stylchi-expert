@@ -104,8 +104,9 @@ class Navbars extends React.Component {
                   </NavItem>
                 
                 </Nav>
-                <Nav className="ml-auto" navbar>
-                <InputGroup className="search-bar">
+                <Nav className="mr-md-5" navbar>
+                  In Review
+                {/* <InputGroup className="search-bar">
                   <Button
                     color="link"
                     data-target="#searchModal"
@@ -118,7 +119,7 @@ class Navbars extends React.Component {
                   </Button>
                   <Input>
                   </Input>
-                </InputGroup>
+                </InputGroup> */}
                 </Nav>
               </UncontrolledCollapse>
             </Container>

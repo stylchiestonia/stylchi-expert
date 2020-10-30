@@ -1,6 +1,7 @@
 import React from "react";
 // reactstrap components
 import { Container, Row, Col, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class Vision extends React.Component {
   render() {
@@ -33,13 +34,16 @@ class Vision extends React.Component {
                         You focus on what you do best - by offering quality services either in a Salon or at Home. We help you to build a digital presence through ratings and reviews via our platform that you can share with your network - everything at your fingertips.
                     </p>
                   </div>
+                  { localStorage.jwtToken ? false :
                   <Button
                     className="mt-5"
                     color="success"
                     size="lg"
+                    to="/auth/register"
+                    tag={Link}
                     >
                         Register
-                    </Button>
+                    </Button> }
                 </Col>
               </Row>
             </Container>

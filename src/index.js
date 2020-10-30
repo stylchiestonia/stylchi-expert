@@ -15,6 +15,7 @@ import PrivateRoute from 'private-route/PrivateRoute';
 import AdminLayout from 'layouts/Admin/Admin.js';
 import AuthLayout from 'layouts/Auth/Auth.js';
 import HomeLayout from 'layouts/Home/Home.js';
+import ThankYou from 'layouts/Feedback/ThankYou.js';
 import 'assets/scss/black-dashboard-react.scss';
 import 'assets/css/nucleo-icons.css';
 import 'react-datetime/css/react-datetime.css';
@@ -36,6 +37,7 @@ if (localStorage.jwtToken) {
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
+    <Route   path='/thank-you' component={ThankYou} />
     <Route   path='/auth' component={AuthLayout} />
     <Route exact path='/' component={HomeLayout} />
       <Switch>

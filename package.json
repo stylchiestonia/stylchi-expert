@@ -23,6 +23,7 @@
     "react-dom": "16.13.0",
     "react-editable-select": "^1.0.0",
     "react-google-maps": "9.4.5",
+    "react-grid-gallery": "^0.5.5",
     "react-id-swiper": "^4.0.0",
     "react-notification-alert": "0.0.12",
     "react-phone-input-2": "^2.13.8",

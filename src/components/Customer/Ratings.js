@@ -50,7 +50,7 @@ class Ratings extends React.Component {
                           <img
                             alt="..."
                             className="rounded-circle"
-                            src={require("assets/img/mike.jpg")}
+                            src={require("assets/img/alice.jpg")}
                           />
                       </div>
                   <div className="mt-5">

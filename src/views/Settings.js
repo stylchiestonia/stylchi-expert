@@ -2,9 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactDatetime from "react-datetime";
 import moment from "moment";
-import { getCurrentExpert, getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery } from "actions/userActions";
+import { getCurrentExpert, getBankInfo, updateCurrentExpert, createOrUpdateBankInfo, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery , updateImage} from "actions/userActions";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+import Gallery from 'react-grid-gallery';
+
 import 'swiper/swiper.scss';
 import {
   Button,
@@ -37,7 +39,24 @@ class Settings extends React.Component {
       message: (
         <div>
           <div>
-            Profile successfuly updated.
+            Updated successfuly
+          </div>
+        </div>
+      ),
+      type: 'success',
+      icon: "tim-icons icon-bell-55",
+      autoDismiss: 7
+    };
+    this.refs.notificationAlert.notificationAlert(options);
+  };
+  notify2 = place => {
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+            Image Upload in Progress
           </div>
         </div>
       ),
@@ -52,6 +71,7 @@ class Settings extends React.Component {
     super(props);
     this.fileInput = React.createRef()
     this.state = {
+      notify: '',
       userId: '',
       modalBank: false,
       modalPersonalDetails: false,
@@ -63,11 +83,13 @@ class Settings extends React.Component {
       rowKey: null,
       isEdit: false,
       image: null,
+      selected: 0,
       scheduale: {
         availability: []
       },
       slidesPerView: 'auto',
       gallery: [],
+      images: [],
       ibanNumber: '',
       accountNumber: '',
       bankName: '',
@@ -100,6 +122,7 @@ class Settings extends React.Component {
         }
       }
     }
+    this.onSelectImage = this.onSelectImage.bind(this);
   }
   onEdit = (id) => {
 
@@ -140,7 +163,34 @@ class Settings extends React.Component {
     this.props.getBankInfo();
     this.props.getCurrentExpert(user);
     this.props.getExpertScheduale(user);
-    this.props.getExpertGallery(user)
+    this.props.getExpertGallery(user);
+  }
+  onRemoveImage() {
+   const data= {
+     images: this.state.images
+   }
+    this.props.updateImage(data).then(res => {
+      const user = {
+        role: 'expert'
+      };
+      this.props.getExpertGallery(user);
+    }).then(
+      this.notify('tr')
+    ).catch(error => {
+    this.notify('tr')
+    })
+  }
+  onSelectImage(index, image) {
+    var images = this.state.images.slice();
+    var img = images[index];
+    if (img.hasOwnProperty("isSelected"))
+      img.isSelected = !img.isSelected;
+    else
+      img.isSelected = true;
+
+    this.setState({
+      images: images
+    });
   }
   toggleModalBank = () => {
     this.setState({
@@ -170,24 +220,6 @@ class Settings extends React.Component {
     this.togglePersonalDetails();
     this.notify("br");
   }
-  imageUpload = () => {
-    let formData = new FormData();
-    formData.append("photo", this.state.image);
-    formData.append("user_id", '5f89b74c785a191b10dab1ac')
-    this.props.uploadImage(formData);
-    // if (event.target.files && event.target.files[0]) {
-    //   this.props.uploadImage(imageFormObj);
-    //   // this.setState({ image: event.currentTarget.files[0] })
-    //   // let imageFormObj = new FormData();
-    //   // imageFormObj.append("imageName", "5f89b74c785a191b10dab1ac" + Date.now());
-    //   // imageFormObj.append("imageData", event.target.files[0]);
-    //   // imageFormObj.append('user_id', "5f89b74c785a191b10dab1ac");
-
-    //   // console.log('--imageFormObj--', imageFormObj);
-    //   // this.props.uploadImage(imageFormObj);
-    // }
-    console.log('----------', this.state.image)
-  }
   triggerInputFile = () => {
     if (this.fileInput.current !== undefined && this.fileInput.current.click !== undefined)
       this.fileInput.current.click()
@@ -196,11 +228,14 @@ class Settings extends React.Component {
   onChangeImage = (event) => {
 
     if (event.target.files && event.target.files[0]) {
-      console.log('---on change image-------', event.target.files[0])
       this.setState({ image: event.currentTarget.files[0] })
       let imageFormObj = new FormData();
       imageFormObj.append("photo", event.target.files[0]);
-      this.props.uploadImage(imageFormObj);
+      this.notify2("tr");
+      this.toggleModalGallery();
+      this.props.uploadImage(imageFormObj).then(res => {
+        this.notify("tr")
+      })
     }
   }
   handleFromChange = (event) => {
@@ -274,7 +309,7 @@ class Settings extends React.Component {
     this.setState({
       userProfile: nextProps.user.payload,
       scheduale: nextProps.user.scheduale,
-      gallery: nextProps.user.gallery
+      images: nextProps.user.gallery
 
     })
   };
@@ -809,52 +844,32 @@ class Settings extends React.Component {
                 <Row className="justify-content-center">
                   Max Upload Limit 5
            </Row>
-           <Row className="justify-content-center">
+                <Row className="justify-content-center">
                   Max Upload Size 5mb
            </Row>
+                <Row className="justify-content-right">
+                  <Col lg="4">
+                    <Button className="btn-icon pl-md-5" color="warning" size="sm" onClick={() => this.onRemoveImage()}>
+                      <i className="fa fa-trash" />
+                    </Button>
+                  </Col>
+                </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
-                    <Swiper
-                      loop='true'
-                      effect='coverflow'
-                      navigation
-                      centeredSlides='true'
-                      slidesPerView={3}
-                      pagination={{ clickable: true }}
-                      grabCursor='true'
-                      coverflow={{
-                        rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slideShadows: true,
+                    <div style={{
+                      display: "block",
+                      minHeight: "1px",
+                      width: "100%",
+                      border: "1px solid #ddd",
+                      overflow: "auto"
+                    }}>
 
-                      }}
-
-                      observer='true'
-                      onSlideChange={() => console.log('slide change')}
-                    >
-                      {(this.state.gallery) ? this.state.gallery.map((image, index) => {
-
-                        return <SwiperSlide key={index} onClick={() => {
-
-                        }}>
-                          <div
-                          >
-                            <img
-                              alt="..."
-                              src={image.imageUrl}
-
-                            >
-                            </img>
-                          </div>
-
-
-                        </SwiperSlide>
-                      }) : false}
-
-                    </Swiper>
-
+                      <Gallery
+                        images={this.state.images}
+                        onSelectImage={this.onSelectImage}
+                        lightboxWidth={1536}
+                      />
+                    </div>
                   </Col>
                 </Row>
               </div>
@@ -1066,5 +1081,5 @@ function mapStateToProp(state) {
 }
 export default connect(
   mapStateToProp,
-  { getCurrentExpert, getBankInfo, createOrUpdateBankInfo, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery }
+  { getCurrentExpert, updateImage, getBankInfo, createOrUpdateBankInfo, updateCurrentExpert, getExpertScheduale, updateExpertScheduale, uploadImage, getExpertGallery }
 )(Settings);

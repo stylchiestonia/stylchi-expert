@@ -72,7 +72,7 @@ export const updateCurrentExpert = currentUser => dispatch => {
       );
   };
   export const uploadImage = imageData => dispatch => {
-      console.log('-----hello--------', imageData)
+    return new Promise((resolve, reject) => {
     axios
       .post("expert/gallery/upload", imageData,
       { headers: { 'content-type': 'multipart/form-data' }})
@@ -81,14 +81,35 @@ export const updateCurrentExpert = currentUser => dispatch => {
           type: FETCH_Gallery_SUCCESS,
           payload: res.data
         });
+        resolve(res)
       })
-      .catch(err =>
+      .catch(err => {
+        reject(err)
         dispatch({
           type: GET_ERRORS,
           payload: err
         })
+      }
       );
-  };
+  });
+}
+  export const updateImage = images => dispatch => {
+    return new Promise((resolve, reject) => {
+    axios
+      .post("expert/gallery/update", images)
+      .then(res => {
+       resolve(res);
+      })
+      .catch(err => {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err
+        })
+        reject(err)
+      }
+      );
+  })
+};
   export const getExpertGallery = expertId => dispatch => {
     axios
       .post("expert/gallery", expertId)

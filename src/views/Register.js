@@ -152,6 +152,7 @@ class Register extends React.Component {
                     <FormGroup>
                       <Input
                       placeholder="Second Name"
+                      required
                         value={this.state.lastName}
                         onChange={this.onChange}
                         type="text"
@@ -258,13 +259,21 @@ class Register extends React.Component {
                 </Row>
                 <Row className="top-margin-row">
                   <Col md='4'>
-                    <Button className="btn-block"
+                    { !this.props.loading && <Button className="btn-block"
                       color="success"
                       type="submit"
                       size="lg"
                     >
                       Get Started
-                  </Button>
+                  </Button>}
+                  { this.props.loading && <Button className="btn-block"
+                      color="success"
+                      disabled
+                      type="submit"
+                      size="lg"
+                    >
+                      Get Started
+                  </Button>}
                   </Col>
                  
                 </Row>

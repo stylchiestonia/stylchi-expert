@@ -20,7 +20,6 @@ import {
 class Navbars extends React.Component {
   refreshBookings= (status) => {
     const bookingData = {
-      expert_id: "5f89b74c785a191b10dab1ac",
       status: status
     };
     this.props.getBookings(bookingData)

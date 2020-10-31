@@ -110,7 +110,6 @@ class Services extends React.Component {
   onChangeCategory = (event) => {
     let items = [...this.state.categories];
     let item = items.find(x => x.categoryName === event.target.value);
-    console.log('------------', item )
     this.setState({
       category: {
         categoryName: item.categoryName,
@@ -422,6 +421,7 @@ class Services extends React.Component {
                           type="select"
                           onChange={this.onChangeUpdateService}
                         >
+                           <option>30M</option>
                           <option>1h</option>
                           <option >1h 30m</option>
                           <option>2h</option>

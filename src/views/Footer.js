@@ -3,12 +3,12 @@ import PrivacyPolicy from 'assets/static/PrivacyPolicy.pdf';
 import PartnerPolicy from 'assets/static/PartnerPolicy.pdf';
 // reactstrap components
 import { Container, Row, Col, Button } from "reactstrap";
-
+import { Link } from "react-router-dom";
 class Footer extends React.Component {
   render() {
     return (
         <div className="main-footer">
-        <section className="section section-hero">
+        <section >
             <Container>
               <Row className="row-grid align-items-center">
                 <Col className="order-md-1" md="6">
@@ -16,7 +16,7 @@ class Footer extends React.Component {
                 <img alt="" src={require("assets/img/theme/logo.png")} />
                 </div>
                 <div className="pr-md-5 mt-5">  
-                <h1 className="title">Our Locations</h1>
+                <p className="title">Our Locations</p>
                 </div>
                   <div className="pr-md-5 mt-4">              
                     <Button className="footer-btn" color="info" size="lg">
@@ -30,59 +30,25 @@ class Footer extends React.Component {
                     </div>
 
                 </Col>
-                <Col className="align-items-right order-md-2" md="6">
-                <div className="pl-md-5 mt-3">  
-                <Button
-                  className="btn-icon-only rounded-circle"
-                  href="https://www.facebook.com/stylchi"
-                  target="_blank"
-                >
-                    <span className="btn-inner--icon">
-                  <i className="fa fa-facebook" aria-hidden="true" />
-                  </span>
-                </Button>
-                <Button
-                  className="btn-icon-only rounded-circle"
-                  href="https://www.instagram.com/stylchi.ee/"
-                >
-                     <span className="btn-inner--icon">
-                  <i className="fa fa-instagram" aria-hidden="true" />
-                  </span>
-                </Button>
-                <Button
-                  className="btn-icon-only rounded-circle"
-                  href="https://www.linkedin.com/company/stylchi/"
-                >
-                    <span className="btn-inner--icon">
-                  <i className="fa fa-linkedin" aria-hidden="true" />
-                  </span>
-                </Button>
-                </div>
-                <div className="pl-md-5 mt-5 align-items-right">
-                    <Row>
-                        {/* <Col md="4">
-                            <h1 className="title-link">Company</h1>
+                <Col className="align-items-right pl-md-5 order-md-2" md="6">
+             
+                <div className="mt-5">
+                    <Row className="mt-5" >
+                        <Col>
+                            <p className="title-link">Get Started</p>
                             <div className="mt-5">
-                                <a className="link" href=""> About us</a>
+                            <Link className="link" to="/">Home</Link>
                             </div>
                             <div className="mt-2">
-                                <a className="link" href="">Blog</a>
+                            <Link className="link" to="/auth/login">Login</Link>
+                              
                             </div>
                             <div className="mt-2">
-                                <a className="link" href=""> Careers</a>
+                            <Link className="link" to="/auth/register"> Sign Up</Link>
                             </div>
-                        </Col> */}
-                        {/* <Col md="4">
-                        <h1 className="title-link">Product</h1>
-                            <div className="mt-5">
-                                <a className="link" href=""> FAQs</a>
-                            </div>
-                            <div className="mt-2">
-                                <a className="link" href="">Support</a>
-                            </div>
-                        </Col> */}
-                        <Col md="4">
-                        <h1 className="title-link">Legal</h1>
+                        </Col>
+                        <Col>
+                        <p className="title-link">Legal</p>
                             <div className="mt-5">
                                 <a className="link" href={PrivacyPolicy} without="true" rel="noopener noreferrer" target="_blank">Privacy policy</a>
                             </div>
@@ -93,8 +59,45 @@ class Footer extends React.Component {
                             <a className="link" href={PartnerPolicy} without="true" rel="noopener noreferrer" target="_blank">Partners policy</a>
                             </div>
                         </Col>
+                        <Col>
+                        <p  className="title-link">Contact</p>
+                            <div className="mt-5">
+                                <p className="link" target="_blank">hello@stylchi.com</p>
+                            </div>
+                            <div className="mt-2">
+                            <p className="link" target="_blank">+371-08743234567</p>
+
+                            </div>
+                            <div>
+                            <Button
+                  className="btn-icon-only rounded-circle"
+                  href="https://www.facebook.com/stylchi"
+                  target="_blank"
+                >
+                    <span className="btn-inner--icon">
+                  <i className="fa fa-facebook" aria-hidden="true" />
+                  </span>
+                </Button> {` `}
+                <Button
+                  className="btn-icon-only rounded-circle"
+                  href="https://www.instagram.com/stylchi.ee/"
+                >
+                     <span className="btn-inner--icon">
+                  <i className="fa fa-instagram" aria-hidden="true" />
+                  </span>
+                </Button> {` `}
+                <Button
+                  className="btn-icon-only rounded-circle"
+                  href="https://www.linkedin.com/company/stylchi/"
+                >
+                    <span className="btn-inner--icon">
+                  <i className="fa fa-linkedin" aria-hidden="true" />
+                  </span>
+                </Button>
+                
+                            </div>
+                        </Col>
                       
-                        
                     </Row>
 
                 </div>

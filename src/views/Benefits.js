@@ -72,8 +72,7 @@ class Benefits extends React.Component {
             </Col>
             <Col lg="4">
             <Card className="card-size">
-                <CardHeader >
-                   
+                <CardHeader >            
                   <CardTitle tag="h4"  style={{                
                     marginTop:"10px"
                 }}>
@@ -81,14 +80,15 @@ class Benefits extends React.Component {
                     height:"30px",
                     width:"50px",                
                 }} >
-                <img alt="" src={require("assets/img/theme/booking.png")}  />
+                <img  alt="" src={require("assets/img/theme/money.png")}  />
                 </div>
+                 
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                <b>Booking System</b>
+                <b>No Monthly Fees</b>
                  <p>
-                 Easy to use booking system, built for your needs, the way you like it.<br /> <br /> 
+                 No monthly fee, no sign-up fee.<br /> <br /> 
                  </p>
                   
                 </CardBody>
@@ -173,57 +173,6 @@ class Benefits extends React.Component {
 
           </Row>
         
-          <Row className="justify-content-center"> 
-            <Col lg="4">
-              <Card className="card-size">
-                <CardHeader >            
-                  <CardTitle tag="h4"  style={{                
-                    marginTop:"10px"
-                }}>
-                   <div style={{
-                    height:"30px",
-                    width:"50px",                
-                }} >
-                <img  alt="" src={require("assets/img/theme/money.png")}  />
-                </div>
-                 
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                <b>No Monthly Fees</b>
-                 <p>
-                 No monthly fee, no sign-up fee.<br /> <br /> 
-                 </p>
-                  
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="4">
-            <Card className="card-size">
-                <CardHeader >
-                   
-                  <CardTitle tag="h4"  style={{                
-                    marginTop:"10px"
-                }}>
-                   <div style={{
-                    height:"30px",
-                    width:"50px",                
-                }} >
-                <img alt="" src={require("assets/img/theme/people.png")}  />
-                </div>
-                 
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                <b>Returning Customers</b>
-                 <p>
-                 Repeat business from the customers<br /> <br /> 
-                 </p>
-                  
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
         </Container>
         </div>
       </>

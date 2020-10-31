@@ -31,7 +31,7 @@ class Ratings extends React.Component {
                     src={require("assets/img/theme/rating-stars.png")}
                   />
                   <div className="list-unstyled mt-5">
-                  <h1>What our partners are saying</h1>
+                  <h1>what our customers are saying about partners.</h1>
                   </div>
                   {/* <div className="icons-block d-flex mt-4">
             <div className="icon position-relative">

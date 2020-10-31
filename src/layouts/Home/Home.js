@@ -1,7 +1,7 @@
 import React from "react";
 import HomeNavbar from "components/Navbars/HomeNavbar.js";
 import Vision from "views/Vision.js";
-import ServiceBooking from "components/Customer/ServiceBooking.js";
+// import ServiceBooking from "components/Customer/ServiceBooking.js";
 import Ratings from "components/Customer/Ratings.js";
 import Safety from "components/Customer/Safety.js";
 import Benefits from "views/Benefits.js";
@@ -30,7 +30,7 @@ class Home extends React.Component {
              <Vision />
              <Benefits />
              <GetStarted />
-             <ServiceBooking />
+             {/* <ServiceBooking /> */}
              <Ratings />
              <Safety />  
              <Footer />         

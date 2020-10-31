@@ -43,7 +43,9 @@ class Dashboard extends React.Component {
             </Col>
             <Col
               md="4" sm="4">
-              <Button color="info" size="lg" style={{
+              <Button color="info"
+              disabled
+               size="lg" style={{
                 float: 'right',
                 color: "#8A8B96",
                 alignItems: "center"
@@ -124,7 +126,9 @@ class Dashboard extends React.Component {
           <Row>
             <Col
               md="8">
-              <Button color="info" size="lg" style={{
+              <Button color="info" size="lg" 
+              disabled
+              style={{
                 color: "#8A8B96",
                 alignItems: "center"
               }}>

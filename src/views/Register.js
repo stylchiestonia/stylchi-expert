@@ -5,7 +5,6 @@ import { registerUser } from "actions/authActions";
 import NotificationAlert from "react-notification-alert";
 import PhoneInput from 'react-phone-input-2';
 import bg from "assets/img/flower-back.png";
-import partner from "assets/img/theme/partner.png";
 import PrivacyPolicy from 'assets/static/PrivacyPolicy.pdf';
 import PartnerPolicy from 'assets/static/PartnerPolicy.pdf';
 import 'react-phone-input-2/lib/bootstrap.css'
@@ -138,7 +137,9 @@ class Register extends React.Component {
                 <Row className="row-grid align-items-center">                 
                   <Col md="4">
                   <div className="pr-md-5">  
-                  <img className="partner-img" src={partner} alt="iampartner"/>
+                  
+                  <img alt="" src={require("assets/img/theme/logo-footer.png")} />
+        
                 </div>
                   </Col>
                 </Row>

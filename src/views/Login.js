@@ -113,12 +113,10 @@ class Login extends React.Component {
               <CardBody className='mt-4 p-4'>
                 <Row>
                   <Col md="8">
-                    <h1>
-                      Login
-                   </h1>
+                  <img alt="" src={require("assets/img/theme/logo-footer.png")} />
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mt-4">
                   <Col md="8">
                     <FormGroup>
                       <Input

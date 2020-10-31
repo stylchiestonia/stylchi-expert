@@ -101,7 +101,7 @@ class Navbars extends React.Component {
                 
                 </Nav>
                 <Nav className="mr-md-5" navbar>
-                  In Review
+                not approved
                 {/* <InputGroup className="search-bar">
                   <Button
                     color="link"

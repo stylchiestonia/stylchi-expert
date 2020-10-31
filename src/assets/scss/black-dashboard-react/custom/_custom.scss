@@ -117,7 +117,7 @@
       max-width: calc(100% - 50px);
     }
     h1 {
-      font-size: 30px !important;
+      font-size: 20px !important;
       line-height: 40px !important;
     }
     .top-banner-text {
@@ -218,7 +218,7 @@
 }
 .dark .benefits{
   font-family: Poppins;
-  font-size: 35px;
+  font-size: 30px;
   line-height: 32px;
   font-weight: bold;
   color: #fff;
@@ -282,16 +282,6 @@ color: $default;
 font-weight: bold;
   }
  
-//   @media screen 
-//   and (device-width: 320px) 
-//   and (device-height: 640px) 
-//   and (-webkit-device-pixel-ratio: 2) 
-// {
-//     // insert here your custom styles
-//     .hero-img {
-//        display:none;
-//     }
-// }
 @media only screen 
 and (max-width: 500px) {
   .hero-img {
@@ -333,10 +323,17 @@ and (max-width: 500px) {
 	outline: -webkit-focus-ring-color auto 5px;
 }
 
-@media (max-width: 978px) {
-  .col {
-    margin-top: 20px;
-  }
+// @media (max-width: 978px) {
+//   .col {
+//     margin-top: 20px;
+//   }
+//   .dark .benefits{
+//     font-family: Poppins;
+//     font-size: 20px;
+//     font-weight: bold;
+//     color: #fff;
+//     margin-bottom: 50px;
+//   }
   // .container {
   //   padding:0;
   //   margin:0;
@@ -351,4 +348,40 @@ and (max-width: 500px) {
   //   margin-right: 0;
   //   margin-bottom:0;
   // }
+
+  @media only screen and (max-width: 425px) {
+    .col {
+      margin-top: 20px;
+    }
+   
+  }
+@media only screen and (max-width: 480px) {
+  .col {
+    margin-top: 20px;
+  }
+  
+}
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+  .col {
+    margin-top: 20px;
+  }
+ 
+}
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .col {
+    margin-top: 20px;
+  }
+ 
+}
+@media only screen and (min-width: 959px) {
+  .col {
+    margin-top: 20px;
+  }
+  
+}
+@media only screen and (min-width: 978px) {
+  .col {
+    margin-top: 20px;
+  }
+  
 }

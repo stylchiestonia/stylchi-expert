@@ -118,7 +118,7 @@ class HomeNavbar extends React.Component {
                         RUS
                       </DropdownItem>
                       <DropdownItem>
-                        EN
+                        EST
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>  

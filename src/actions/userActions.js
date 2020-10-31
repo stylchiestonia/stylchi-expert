@@ -19,11 +19,12 @@ export const getCurrentExpert = user => dispatch => {
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
       );
   };
 export const updateCurrentExpert = currentUser => dispatch => {
+  return new Promise((resolve, reject) => {
     axios
       .post("current/update", currentUser)
       .then(res => {
@@ -31,14 +32,18 @@ export const updateCurrentExpert = currentUser => dispatch => {
             type: FETCH_USER_SUCCESS,
             payload: res.data
         });
+        resolve(res)
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
+        reject(err)
+      }
       );
-  };
+})
+};
   export const getExpertScheduale = expert => dispatch => {
     axios
       .post("expert/scheduale", expert)
@@ -51,7 +56,7 @@ export const updateCurrentExpert = currentUser => dispatch => {
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
       );
   };
@@ -67,7 +72,7 @@ export const updateCurrentExpert = currentUser => dispatch => {
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
       );
   };
@@ -83,13 +88,13 @@ export const updateCurrentExpert = currentUser => dispatch => {
         });
         resolve(res)
       })
-      .catch(err => {
-        reject(err)
+      .catch(err => {   
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
-      }
+        reject(err)
+      }  
       );
   });
 }
@@ -103,7 +108,7 @@ export const updateCurrentExpert = currentUser => dispatch => {
       .catch(err => {
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
         reject(err)
       }
@@ -122,11 +127,12 @@ export const updateCurrentExpert = currentUser => dispatch => {
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err
+          payload: err.response.data
         })
       );
   };
   export const getBankInfo = () => dispatch => {
+    return new Promise((resolve, reject) => {
     dispatch({
       type:REQUEST_USER_PROFILE
   })
@@ -137,15 +143,19 @@ export const updateCurrentExpert = currentUser => dispatch => {
               type: FETCH_BANK_SUCCESS,
               payload: res.data
           });
+          resolve(res);
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
-            payload: err
+            payload: err.response.data
           })
+          reject(err);
+        }
         );
-    };
+  })}
     export const createOrUpdateBankInfo = (bankInfo) => dispatch => {
+      return new Promise((resolve, reject) => {
       dispatch({
         type:REQUEST_USER_PROFILE
     })
@@ -156,11 +166,14 @@ export const updateCurrentExpert = currentUser => dispatch => {
                 type: FETCH_BANK_SUCCESS,
                 payload: res.data
             });
+            resolve(res);
           })
-          .catch(err =>
+          .catch(err => {
             dispatch({
               type: GET_ERRORS,
-              payload: err
+              payload: err.response.data
             })
+            reject(err);
+          }
           );
-      };
+      })}

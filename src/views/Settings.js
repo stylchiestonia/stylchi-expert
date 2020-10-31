@@ -20,7 +20,8 @@ import {
   Col,
   Container,
   Table,
-  Spinner
+  Spinner,
+  Form
 } from "reactstrap";
 import NotificationAlert from "react-notification-alert";
 import bg from "assets/img/flower-back.png";
@@ -33,28 +34,11 @@ class Settings extends React.Component {
       message: (
         <div>
           <div>
-            Updated successfuly
+            {this.state.errors.data}
           </div>
         </div>
       ),
-      type: 'success',
-      icon: "tim-icons icon-bell-55",
-      autoDismiss: 7
-    };
-    this.refs.notificationAlert.notificationAlert(options);
-  };
-  notify2 = place => {
-    var options = {};
-    options = {
-      place: place,
-      message: (
-        <div>
-          <div>
-            Image Upload in Progress
-          </div>
-        </div>
-      ),
-      type: 'success',
+      type: 'warning',
       icon: "tim-icons icon-bell-55",
       autoDismiss: 7
     };
@@ -65,6 +49,7 @@ class Settings extends React.Component {
     super(props);
     this.fileInput = React.createRef()
     this.state = {
+      errors: {},
       isSubmitting: false,
       userId: '',
       modalBank: false,
@@ -161,17 +146,12 @@ class Settings extends React.Component {
     this.props.getExpertGallery(user);
   }
   onRemoveImage() {
-    console.log('------canDel--------');
-
     let canDel = false;
     for (const img of this.state.images) {
-      console.log('------here--------');
       if (img.isSelected) {
         canDel = true;
-        //return
       }
     }
-    console.log('------canDel--------', canDel);
     if (canDel) {
       const data = {
         images: this.state.images
@@ -189,12 +169,15 @@ class Settings extends React.Component {
           isSubmitting: false
         })
       ).catch(error => {
+        this.setState({
+          isSubmitting: false
+        })
         this.notify('tr')
       })
     }
 
   }
-  onSelectImage(index, image) {
+  onSelectImage(index) {
     var images = this.state.images.slice();
     var img = images[index];
     if (img.hasOwnProperty("isSelected"))
@@ -230,9 +213,20 @@ class Settings extends React.Component {
     const current = {
       currentUser: this.state.userProfile
     };
-    this.props.updateCurrentExpert(current);
-    this.togglePersonalDetails();
-    this.notify("br");
+    
+    this.setState({
+      isSubmitting: true
+    })
+    this.props.updateCurrentExpert(current).then(res => {
+      this.setState({
+        isSubmitting: false
+      })
+    }).catch( errors => {
+      this.setState({
+        isSubmitting: false
+      })
+      this.notify("tr")
+    })
   }
   triggerInputFile = () => {
     if (this.fileInput.current !== undefined && this.fileInput.current.click !== undefined)
@@ -256,7 +250,14 @@ class Settings extends React.Component {
         this.setState({
           isSubmitting: false
         })
-      })
+      }).catch( errors => {
+        this.setState({
+          isSubmitting: false
+        })
+        this.notify("tr")
+      }
+        
+      )
     }
   }
   handleFromChange = (event) => {
@@ -327,6 +328,12 @@ class Settings extends React.Component {
         fullName: nextProps.user.bankInfo.fullName
       });
     }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+     
+    }
     this.setState({
       userProfile: nextProps.user.payload,
       scheduale: nextProps.user.scheduale,
@@ -335,7 +342,8 @@ class Settings extends React.Component {
     })
   };
 
-  updateBankDetails = () => {
+  updateBankDetails = (e) => {
+    e.preventDefault();
     let data = {
       bankInfo: {
         ibanNumber: this.state.ibanNumber,
@@ -346,8 +354,19 @@ class Settings extends React.Component {
         fullName: this.state.fullName,
       }
     }
-    this.props.createOrUpdateBankInfo(data);
-    this.toggleModalBank();
+    this.setState({
+      isSubmitting: true
+    })
+    this.props.createOrUpdateBankInfo(data).then(res => {
+      this.setState({
+        isSubmitting: false
+      })
+    }).catch( errors => {
+      this.setState({
+        isSubmitting: false
+      })
+      this.notify("tr")
+    })
   }
 
   render() {
@@ -458,6 +477,7 @@ class Settings extends React.Component {
             </div>
             <ModalBody >
               <div className="content">
+              <Form onSubmit={this.updateBankDetails}>
                 <Row>
                   <Col className="pr-md-1" md="6">
                     <FormGroup>
@@ -473,6 +493,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Full Name</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.fullName}
                         type="text"
@@ -480,12 +501,13 @@ class Settings extends React.Component {
                       />
                     </FormGroup>
                   </Col>
-                </Row>
+                </Row>            
                 <Row style={{ marginTop: "30px" }}>
                   <Col className="pr-md-1" md="6">
                     <FormGroup>
                       <label>IBAN number</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.ibanNumber}
                         type="text"
@@ -497,6 +519,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Account number</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.accountNumber}
                         type="text"
@@ -510,6 +533,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Bank Name</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.bankName}
                         type="text"
@@ -522,6 +546,7 @@ class Settings extends React.Component {
 
                       <label>Bank Address</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.bankAddress}
                         type="text"
@@ -535,6 +560,7 @@ class Settings extends React.Component {
                     <FormGroup>
                       <label>Swift Code</label>
                       <Input
+                      required
                         onChange={this.onChangeBankInfo}
                         value={this.state.swiftCode}
                         type="text"
@@ -545,15 +571,22 @@ class Settings extends React.Component {
                 </Row>
                 <Row style={{ marginTop: "30px" }}>
                   <Col>
-                    <Button className="btn-block"
+                    {!this.state.isSubmitting && <Button className="btn-block"
                       color="success"
-                      type="button"
-                      onClick={this.updateBankDetails}
+                      type="submit"  
                     >
                       Save
-                  </Button>
+                  </Button>}
+                  {this.state.isSubmitting && <Button className="btn-block"
+                      color="success"
+                      type="submit"  
+                      disabled
+                    >
+                      Save
+                  </Button>}
                   </Col>
                 </Row>
+                </Form>
               </div>
             </ModalBody>
           </Modal>
@@ -590,7 +623,7 @@ class Settings extends React.Component {
                     </Col>
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
-                        <label>Second Name</label>
+                        <label>Last Name</label>
                         <Input
                           id="lastName"
                           value={this.state.userProfile.lastName || ''}
@@ -795,7 +828,7 @@ class Settings extends React.Component {
                   </Row>
                   <Row style={{ marginTop: "30px" }}>
                     <Col>
-                      <Button className="btn-block"
+                     { !this.state.isSubmitting && <Button className="btn-block"
                         color="success"
                         type="button"
                         onClick={() => {
@@ -803,7 +836,14 @@ class Settings extends React.Component {
                         }}
                       >
                         Save
-                  </Button>
+                  </Button>}
+                  { this.state.isSubmitting && <Button className="btn-block"
+                        color="success"
+                        type="button"
+                       disabled
+                      >
+                        Save
+                  </Button>}
                     </Col>
                   </Row>
                 </div>) : (
@@ -1111,7 +1151,8 @@ class Settings extends React.Component {
 
 function mapStateToProp(state) {
   return {
-    user: state.user
+    user: state.user,
+    errors: state.errors
   }
 }
 export default connect(

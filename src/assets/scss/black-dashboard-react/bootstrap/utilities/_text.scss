@@ -39,7 +39,10 @@
 
 // Contextual colors
 
-.text-white { color: $white !important; }
+.text-white { 
+  text-align: center;
+  font-size: 16px;
+  color: $white !important; }
 
 @each $color, $value in $theme-colors {
   @include text-emphasis-variant(".text-#{$color}", $value);

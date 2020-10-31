@@ -6,6 +6,17 @@
 
 // Lines colors
 
+$shapes-primary-colors: () !default;
+$shapes-primary-colors: map-merge((
+  "step-1-gradient-bg":         #281483,
+  "step-2-gradient-bg":         #8f6ed5,
+  "step-3-gradient-bg":         #d782d9,
+  "span-1-bg":                  #53f,
+  "span-2-bg":                  #22B869,
+  "span-3-bg":                  #4f40ff,
+  "span-4-bg":                  #25ddf5,
+  "span-5-bg":                  #1fa2ff
+), $shapes-primary-colors);
 @function shapes-primary-color($key: "step-1-gradient-bg") {
 	@return map-get($shapes-primary-colors, $key);
 }
@@ -21,3 +32,38 @@
 @function shapes-dark-color($key: "step-1-gradient-bg") {
 	@return map-get($shapes-dark-colors, $key);
 }
+$shapes-default-colors: () !default;
+$shapes-default-colors: map-merge((
+  "step-1-gradient-bg":         #22ba69d8,
+  "step-2-gradient-bg":         #22BA69,
+  "step-3-gradient-bg":         #5aeb96,
+  "span-1-bg":                  #7795f8,
+  "span-2-bg":                  #7b9aff,
+  "span-3-bg":                  #6f8ff8,
+  "span-4-bg":                  #76eea7,
+  "span-5-bg":                  #6adaff
+), $shapes-default-colors);
+
+$shapes-light-colors: () !default;
+$shapes-light-colors: map-merge((
+  "step-1-gradient-bg":         #b2cbe1,
+  "step-2-gradient-bg":         #f6f9fc,
+  "step-3-gradient-bg":         #f6f9fc,
+  "span-1-bg":                  #b4cce1,
+  "span-2-bg":                  #c5dbef,
+  "span-3-bg":                  #b9d5ed,
+  "span-4-bg":                  #74e4a2,
+  "span-5-bg":                  #008169
+), $shapes-light-colors);
+
+$shapes-dark-colors: () !default;
+$shapes-dark-colors: map-merge((
+  "step-1-gradient-bg":         #32325d,
+  "step-2-gradient-bg":         #32325d,
+  "step-3-gradient-bg":         #32325d,
+  "span-1-bg":                  #2e2e57,
+  "span-2-bg":                  #2b2b58,
+  "span-3-bg":                  #25254d,
+  "span-4-bg":                  #d782d9,
+  "span-5-bg":                  #008169
+), $shapes-dark-colors);

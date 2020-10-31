@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
@@ -21,7 +22,9 @@ class Hero extends React.Component {
                   </Col>                 
                 </Row>
                 <Row className="align-items-center justify-content-center">
-                <Button color="success">
+                <Button color="success"
+                 to="/auth/register"
+                 tag={Link}>
                       Get Started
                   </Button>
                 </Row>

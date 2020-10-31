@@ -17,7 +17,7 @@ class Safety extends React.Component {
               <Row className="row-grid align-items-center">
                 <Col className="order-md-1" md="6">
                 <div className="pr-md-5 mt-4">  
-                <h1>Safety, first</h1>
+                <h1 >Safety, first</h1>
                 </div>
                   <div className="pr-md-5 mt-4">              
                     <p>

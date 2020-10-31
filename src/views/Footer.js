@@ -13,7 +13,7 @@ class Footer extends React.Component {
               <Row className="row-grid align-items-center">
                 <Col className="order-md-1" md="6">
                 <div className="pr-md-5 mt-3">  
-                <img alt="" src={require("assets/img/theme/logo.png")} />
+                <img alt="" src={require("assets/img/theme/logo-footer.png")} />
                 </div>
                 <div className="pr-md-5 mt-5">  
                 <p className="title">Our Locations</p>
@@ -52,14 +52,11 @@ class Footer extends React.Component {
                             <div className="mt-5">
                                 <a className="link" href={PrivacyPolicy} without="true" rel="noopener noreferrer" target="_blank">Privacy policy</a>
                             </div>
-                            {/* <div className="mt-2">
-                                <a className="link" href="/">Booking policy</a>
-                            </div> */}
                             <div className="mt-2">
                             <a className="link" href={PartnerPolicy} without="true" rel="noopener noreferrer" target="_blank">Partners policy</a>
                             </div>
                         </Col>
-                        <Col>
+                        <Col className="col">
                         <p  className="title-link">Contact</p>
                             <div className="mt-5">
                                 <p className="link" target="_blank">hello@stylchi.com</p>

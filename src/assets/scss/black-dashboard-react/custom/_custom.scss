@@ -179,7 +179,7 @@
   }
   .title{
     font-family: Poppins;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 32px;
     font-weight: bold;
     color: #fff;
@@ -331,4 +331,24 @@ and (max-width: 500px) {
 .inputfile:focus + label {
 	outline: 1px dotted #000;
 	outline: -webkit-focus-ring-color auto 5px;
+}
+
+@media (max-width: 978px) {
+  .col {
+    margin-top: 20px;
+  }
+  // .container {
+  //   padding:0;
+  //   margin:0;
+  // }
+
+  // body {
+  //   padding:0;
+  // }
+
+  // .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+  //   margin-left: 0;
+  //   margin-right: 0;
+  //   margin-bottom:0;
+  // }
 }

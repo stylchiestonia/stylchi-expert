@@ -2,14 +2,13 @@ import React from "react";
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-import bg from "assets/img/theme/hero.jpg"
 class Hero extends React.Component {
   render() {
     return (
       <>
       <div >
 
-          <section className="section section-hero sm" >
+          <section className="section section-hero" >
             <Container className="d-flex align-items-center">
               <div className="col">
                 <Row className="align-items-center justify-content-center">

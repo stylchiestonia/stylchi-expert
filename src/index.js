@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import store from 'store';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-
+import './i18n';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import setAuthToken from './utils/setAuthToken';
 import PrivateRoute from 'private-route/PrivateRoute';

@@ -1,14 +1,21 @@
+/* eslint-disable */ 
 import React from "react";
 import { Link } from "react-router-dom";
+import { Trans } from 'react-i18next';
+
+import { connectTranslation } from 'middleware/connect';
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
+connectTranslation()
 class Hero extends React.Component {
   render() {
     return (
       <>
       <div >
-
+      <Trans i18nKey="description.part1">
+              or
+            </Trans>
           <section className="section section-hero" >
             <Container className="d-flex align-items-center">
               <div className="col">

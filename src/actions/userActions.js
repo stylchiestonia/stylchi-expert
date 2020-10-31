@@ -1,6 +1,6 @@
 import axios from "axios"
 import { GET_ERRORS,REQUEST_USER_PROFILE, FETCH_BANK_SUCCESS, FETCH_USER_SUCCESS, FETCH_SCEHDUALE_SUCCESS, FETCH_Gallery_SUCCESS } from "./types";
-
+import { setLocalization } from "middleware/localization"
 axios.defaults.headers.common = {
   'Authorization': 'JWT ' + localStorage.jwtToken
 };
@@ -177,3 +177,24 @@ export const updateCurrentExpert = currentUser => dispatch => {
           }
           );
       })}
+
+
+      export const changeCurrentLocalization = (lang, reload = true) => dispatch => {
+        return new Promise((resolve, reject) => {
+            axios
+              .post("/user/locale", lang)
+              .then(res =>
+              dispatch({
+                type: FETCH_BANK_SUCCESS,
+                payload: res.data
+            })
+            ).then(() => {
+            setLocalization(lang)
+            if (reload) {
+              window.location.reload();
+            }
+            resolve()
+      }).catch(error =>
+        reject(error)
+      )})
+  } 

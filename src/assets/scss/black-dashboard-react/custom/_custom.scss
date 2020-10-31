@@ -284,9 +284,9 @@ font-weight: bold;
  
 @media only screen 
 and (max-width: 500px) {
-  // .hero-img {
-  //    display: none;
-  // }
+  .hero-img {
+     display: none;
+  }
 }
 .partner-img {
   height: 110px;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
-
+import { setLocalization } from 'middleware/localization';
 // JavaScript plugin that hides or shows a component based on your scroll
 import Headroom from "headroom.js";
 // reactstrap components
@@ -33,11 +33,23 @@ class HomeNavbar extends React.Component {
     this.props.history.push("/admin/settings");
 
   }
+  changeLangEst=()=>{
+    setLocalization("EE");
+    window.location.reload();
+   
+  }
+  changeLangEng=()=>{
+    setLocalization("EN");
+    window.location.reload();
+   
+  }
   componentDidMount() {
+
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
   }
   state = {
+    lang: "ENG",
     collapseClasses: "",
     collapseOpen: false
   };
@@ -110,15 +122,20 @@ class HomeNavbar extends React.Component {
                       {/* <i className="fa fa-language mr-1" /> */}
                       <img className="mr-1" alt="..." src={require("assets/img/lang.png")} />
 
-                      <span className="nav-link-inner--text">EN</span>
+                      <span className="nav-link-inner--text">{this.state.lang}</span>
                       <b className="caret d-none d-lg-block d-xl-block" />
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem >
-                        RUS
+                      <DropdownItem onClick={this.changeLangEng}>
+                      <div >
+                      ENG
+                        </div>
+                        
                       </DropdownItem>
-                      <DropdownItem>
+                      <DropdownItem onClick={this.changeLangEst}>
+                  
                         EST
+      
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>  

@@ -226,7 +226,7 @@ class Settings extends React.Component {
         isSubmitting: false
       })
       this.notify("tr")
-    })
+    });
   }
   triggerInputFile = () => {
     if (this.fileInput.current !== undefined && this.fileInput.current.click !== undefined)

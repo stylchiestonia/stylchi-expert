@@ -26,6 +26,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSubmitting: false,
       firstName: "",
       lastName: "",
       phoneNumber: "",
@@ -52,15 +53,7 @@ class Register extends React.Component {
       });
     }
   }
-  // componentDidUpdate() {
-  //   if(Object.keys(this.state.errors).length !== 0){
-     
-  //     this.setState({
-  //       errors: {}
-  //     });
-  //     this.notify('tr')
-  //   }
-  // }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -86,10 +79,19 @@ class Register extends React.Component {
       allowContact: this.state.allowContact
       }
     };
+    this.setState({
+      isSubmitting: true
+    });
     this.props.registerUser(data).then(res => {
+      this.setState({
+        isSubmitting: false
+      });
       this.props.history.push('/thank-you')
     }
   ).catch(error => {
+    this.setState({
+      isSubmitting: false
+    });
     this.notify('tr')
     })
   };
@@ -264,13 +266,20 @@ class Register extends React.Component {
                 </Row>
                 <Row className="top-margin-row">
                   <Col md='4'>
-                    <Button className="btn-block"
+                   { !this.state.isSubmitting && <Button className="btn-block"
                       color="success"
                       type="submit"
                       size="lg"
                     >
                       Get Started
-                  </Button>
+                  </Button>}
+                  { this.state.isSubmitting && <Button className="btn-block"
+                      color="success"
+                      size="lg"
+                      disabled
+                    >
+                      Get Started
+                  </Button>}
                   </Col>
                  
                 </Row>

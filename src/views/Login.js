@@ -21,6 +21,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSubmitting: false,
       email: "",
       password: "",
       errors: {}
@@ -46,15 +47,7 @@ class Login extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    // if(Object.keys(this.state.errors).length !== 0){
-     
-    //   this.setState({
-    //     errors: {}
-    //   });
-    //   this.notify('tr')
-    // }
-  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -64,11 +57,18 @@ class Login extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-
+    this.setState({
+      isSubmitting: true
+    });
     this.props.loginUser(userData).then(res => {
-      //toast.success(res.message, { position: toast.POSITION.TOP_CENTER })
+      this.setState({
+        isSubmitting: false
+      });
   }
 ).catch(error => {
+  this.setState({
+    isSubmitting: false
+  });
   this.notify('tr')
   })
   };
@@ -142,7 +142,7 @@ class Login extends React.Component {
                 </Row>
                 <Row>
                   <Col md='4'>
-                    <Button className="btn-block"
+                    { !this.state.isSubmitting && <Button className="btn-block"
                       color="success"
                       type="button"
                       size="lg"
@@ -151,7 +151,15 @@ class Login extends React.Component {
                       }}
                     >
                       Login
-                  </Button>
+                  </Button>}
+                  { this.state.isSubmitting && <Button className="btn-block"
+                  disabled
+                      color="success"
+                      type="button"
+                      size="lg"
+                    >
+                      Login
+                  </Button>}
                   </Col>
                 </Row>
                   <Row className="top-margin-row-high">

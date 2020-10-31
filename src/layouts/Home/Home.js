@@ -1,10 +1,11 @@
 import React from "react";
 import HomeNavbar from "components/Navbars/HomeNavbar.js";
-import Vision from "views/Vision.js";
+// import Vision from "views/Vision.js";
 import AboutUs from "views/AboutUs.js";
 import Ratings from "components/Customer/Ratings.js";
 import Safety from "components/Customer/Safety.js";
 import Benefits from "views/Benefits.js";
+import Hero from "views/Hero.js";
 import GetStarted from "views/GetStarted.js";
 import Footer from "views/Footer.js";
 class Home extends React.Component {
@@ -27,7 +28,8 @@ class Home extends React.Component {
         <div className="content">
           
              <HomeNavbar />
-             <Vision />
+             <Hero />
+             {/* <Vision /> */}
              <AboutUs/>
             
              <GetStarted />

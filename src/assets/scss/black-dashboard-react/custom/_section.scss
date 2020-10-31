@@ -22,7 +22,26 @@
 // Hero sections
 .section-hero {
     @include media-breakpoint-up(md) {
+        background-image: url("../../../img/theme/hero.jpg") ;
         min-height: 700px;
+        background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+
+    }
+//     @include media-breakpoint-up(sm) {
+//         background-image: url("../../../img/theme/img-xs.jpg");
+// //         background-image: url("../../../img/theme/hero.jpg") ;
+//         min-height: 700px;
+//         background-repeat: no-repeat;
+// background-size: cover;
+// background-position: center center;
+
+//     }
+    @include media-breakpoint-up(xs) {
+        background-image: url("../../../img/theme/img-xs.jpg") ;
+//         background-image: url("../../../img/theme/hero.jpg") ;
+        min-height: 500px;
         background-repeat: no-repeat;
 background-size: cover;
 background-position: center center;
@@ -45,7 +64,9 @@ background-position: center center;
 .section-shaped {
     position: relative;
     overflow: hidden;
-
+    .hero-title {
+        color: "#fff"
+    }
     &.section-hero {
       &:before {
         top: 680px;
@@ -97,6 +118,7 @@ background-position: center center;
             + .shape-container {
                 padding-top: 18rem;
                 padding-bottom: 19rem;
+                
             }
         }
     }
